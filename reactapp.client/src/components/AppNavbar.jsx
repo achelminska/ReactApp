@@ -175,7 +175,7 @@ export default function AppNavbar() {
                         <div className="vertical-divider2 d-none d-lg-block"></div>
                         <Nav.Link href="#action5" className="linksMenuDesktop2">O nas</Nav.Link>
                         <div className="vertical-divider2 d-none d-lg-block"></div>
-                        <Nav.Link href="#action6" className="linksMenuDesktop2">Kontakt</Nav.Link>
+                        <Nav.Link as={Link} to="/kontakt" className="linksMenuDesktop2">Kontakt</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>

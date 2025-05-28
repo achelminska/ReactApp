@@ -1,0 +1,173 @@
+.contact-page {
+    background-color: #000;
+    color: white;
+    min-height: 100vh;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    .contact-header {
+        background-color: #000;
+        padding: 1rem 2rem;
+
+        img {
+            height: 50px;
+        }
+
+        button {
+            font-weight: 600;
+            border-radius: 30px;
+            padding: 0.4rem 1.5rem;
+            background-color: #F5821E;
+            border: none;
+            color: black;
+
+            &:hover {
+                background-color: darken(#F5821E, 10%);
+            }
+        }
+    }
+
+    .section-with-line {
+        position: relative;
+        background: #000;
+        padding: 0 0 1rem;
+        margin-bottom: 1rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(to right, transparent, #F5821E, transparent);
+            pointer-events: none;
+        }
+    }
+
+    .contact-body {
+        flex: 1;
+        padding: 2rem 4rem;
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .search-input {
+            background-color: #1a1a1a;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+
+    .faq-sidebar {
+        padding-right: 2rem;
+
+        .sidebar-btn {
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            padding: 0.6rem 1.2rem;
+            background-color: #F5821E;
+            color: black;
+            border: none;
+
+            &.btn-secondary {
+                background-color: #444 !important;
+                color: #fff;
+            }
+
+            &:hover {
+                background-color: darken(#F5821E, 10%);
+            }
+        }
+    }
+
+    .faq-content {
+        .accordion-item {
+            background-color: #1c1c1c;
+            border: none;
+            margin-bottom: 0.8rem;
+
+            .accordion-header {
+                background-color: #1c1c1c;
+
+                button {
+                    background-color: #2a2a2a;
+                    color: #fff;
+                    font-weight: 500;
+                    border: none;
+                }
+            }
+
+            .accordion-body {
+                background-color: #2a2a2a;
+                color: #ddd;
+                font-size: 0.95rem;
+                padding: 1rem 1.5rem;
+            }
+        }
+    }
+
+    .bottom-help {
+        margin-top: 4rem;
+
+        h4 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        button {
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            border-radius: 30px;
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            border-radius: 30px;
+            background-color: #F5821E;
+            color: black;
+            border: none;
+
+            &:hover {
+                background-color: darken(#F5821E, 10%);
+            }
+        }
+    }
+
+    .contact-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 0 auto;
+        background-color: #000;
+        color: white;
+
+        .flex-grow-1 {
+            flex-grow: 1;
+        }
+    }
+
+    .contact-orange-button {
+        background-color: #F5821E;
+        color: black;
+        font-weight: 600;
+        border: none;
+        border-radius: 30px;
+        padding: 0.6rem 2rem;
+
+        &:hover {
+            background-color: #F5821E;
+        }
+    }
+}
