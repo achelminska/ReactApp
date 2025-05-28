@@ -1,0 +1,31 @@
+
+
+
+.floating-zakup-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 998;
+}
+
+.button-kupbilet {
+    background-color: #f5821e;
+    color: black;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border: none;
+
+    &:hover {
+        background-color: black;
+        border: 2px solid #f5821e;
+        color: #f5821e;
+    }
+}
+
+.button-kupbilet.btn:active {
+    transform: scale(0.96);
+    background-color: black;
+    border: 2px solid #f5821e;
+    color: #f5821e;
+}

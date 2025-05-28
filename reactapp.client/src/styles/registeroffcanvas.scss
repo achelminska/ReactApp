@@ -1,0 +1,60 @@
+﻿@import 'variables';
+.register-offcanvas {
+
+    .offcanvas-header {
+        background-color: $black;
+        color: $primary;
+    }
+
+    .offcanvas-body {
+        background-color: black;
+        padding: 2rem;
+    }
+
+    .form-label,
+    .form-check-label {
+        color: rgba(255, 255, 255, 0.55) !important;
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .form-check-input {
+        accent-color: rgba(255, 255, 255, 0.55);
+    }
+    
+    .form-check-input:checked {
+        background-color: $primary !important;
+        border-color: $primary !important;
+    }
+
+    .form-check-input:focus,
+    .form-check-input:active {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .btn-primary {
+        background-color: $primary;
+        border-color: darken($primary, 10%);
+    }
+
+    .login-btn {
+        display: block;
+        width: 50%;
+        margin: 2rem auto 0;
+
+        &:hover,
+        &:active {
+            transform: scale(0.96);
+            background-color: black;
+            border: 2px solid #f5821e;
+            color: #f5821e;
+        }
+    }
+
+    .title {
+        margin: 10px 17px;
+        color: $primary;
+        font-size: 1.7rem;
+    }
+}

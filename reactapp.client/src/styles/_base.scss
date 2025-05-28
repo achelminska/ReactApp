@@ -1,0 +1,29 @@
+@import 'variables';
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+}
+
+h5 {
+    color: $primary;
+}
+
+.menu {
+    color: $primary;
+    font-weight: bold;
+}
+
+.bgMain {
+    background-color: $black;
+    width: 100%;
+}
+
+.content-wrapper {
+    padding-top: 84px;
+
+    @media (min-width: 992px) {
+        padding-top: 134px;
+    }
+}

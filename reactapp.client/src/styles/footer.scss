@@ -1,0 +1,20 @@
+﻿@import 'variables';
+.site-footer {
+    background-color: #000; 
+    color: #8B5221; 
+    padding: 3rem 0;
+    margin-bottom: 80px;
+
+    a {
+        color: #8B5221;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline; 
+        }
+    }
+
+    h5 {
+        color: #8B5221;
+    }
+}

@@ -1,0 +1,27 @@
+﻿@import 'variables';
+@import 'base';
+@import 'navbar';
+@import 'carousel';
+@import 'screen';
+@import 'search';
+@import 'offcanvas';
+@import 'footer';
+@import './scroll.scss';
+
+// Przykładowe wartości – dostosuj wysokości do realnego wyglądu
+$first-navbar-height: 80px; // wysokość pierwszego paska
+$second-navbar-height: 50px; // wysokość drugiego paska (tylko na desktop)
+
+.main-container {
+    width:100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    // zawsze odsuwamy content pod pierwszy navbar
+    padding-top: $first-navbar-height;
+    // od tabletów w górę (≥992px) mamy też drugi navbar, więc dodajemy jego wysokość
+    @media (min-width: 992px) {
+        padding-top: calc(#{$first-navbar-height} + #{$second-navbar-height});
+    }
+}

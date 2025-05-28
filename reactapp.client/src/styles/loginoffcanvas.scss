@@ -1,0 +1,46 @@
+﻿@import 'variables';
+.login-offcanvas {
+
+    .offcanvas-header {
+        background-color: $black;
+        color: $primary !important;
+    }
+
+    .offcanvas-body {
+        background-color: black;
+        padding: 2rem;
+    }
+
+    .form-control:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: $primary !important;
+    }
+
+    .btn-primary {
+        background-color: $primary;
+        border-color: darken($primary, 10%);
+    }
+
+    .login-btn {
+        display: block;
+        width: 50%;
+        margin: 2rem auto 0;
+
+        &:hover,
+        &:active{
+            transform: scale(0.96);
+            background-color: black;
+            border: 2px solid #f5821e;
+            color: #f5821e;
+        }
+    }
+
+    .title {
+        margin: 10px 17px;
+        color: $primary;
+        font-size: 1.7rem;
+    }
+}
+
+
