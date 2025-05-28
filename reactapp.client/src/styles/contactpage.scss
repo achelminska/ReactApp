@@ -170,4 +170,26 @@
             background-color: #F5821E;
         }
     }
+
+    .rounded-accordion .accordion-item {
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .rounded-accordion .accordion-header,
+    .rounded-accordion .accordion-body {
+        border-radius: 0;
+    }
+
+    .rounded-accordion .accordion-button {
+        border-radius: 0;
+    }
+
+    .submenu {
+        border-radius: 20px !important;
+        padding: 0.5rem 0;
+        background-color: #1e1f21; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    }
 }

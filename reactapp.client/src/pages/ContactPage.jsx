@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Accordion, Form } from 'react-bootstrap';
 import Footer from '../components/Footer';
 import '../styles/contactpage.scss';
@@ -7,15 +7,11 @@ const faqData = {
     "Repertuar": [
         {
             question: "Kiedy na stronie pojawi się repertuar?",
-            answer: `Repertuar aktualizowany jest co tydzień. Pojawia się na naszej stronie we wtorek wieczorem lub w środę rano i obowiązuje na 
-            kolejny tydzień repertuarowy trwający od piątku do czwartku. W przypadku wcześniejszej przedsprzedaży na wybrane tytuły, w repertuarze 
-            mogą pojawić się seanse na daty wybiegające poza tydzień repertuarowy.`
+            answer: "Repertuar aktualizowany jest co tydzień. Pojawia się na naszej stronie we wtorek wieczorem lub w środę rano i obowiązuje na kolejny tydzień repertuarowy trwający od piątku do czwartku. W przypadku wcześniejszej przedsprzedaży na wybrane tytuły, w repertuarze mogą pojawić się seanse na daty wybiegające poza tydzień repertuarowy."
         },
         {
             question: "Jak długo film będzie dostępny w repertuarze?",
-            answer: `Nie mamy z góry określonego czasu w jakim dana produkcja będzie znajdować się w repertuarze, jest to zależne m.in od popularności 
-            filmu oraz od ilości sal dostępnych w naszych kinach. Jeżeli w repertuarze dostępny jest wyłącznie jeden seans, to może oznaczać, że niebawem 
-            film zejdzie z naszych ekranów.`
+            answer: "Nie mamy z góry określonego czasu w jakim dana produkcja będzie znajdować się w repertuarze, jest to zależne m.in od popularności filmu oraz od ilości sal dostępnych w naszych kinach. Jeżeli w repertuarze dostępny jest wyłącznie jeden seans, to może oznaczać, że niebawem film zejdzie z naszych ekranów."
         },
         {
             question: "Gdzie mogę sprawdzić, jakie jest ograniczenie wiekowe dla wybranego filmu?",
@@ -23,9 +19,7 @@ const faqData = {
         },
         {
             question: "Czy mogę zabrać ze sobą dziecko na seans, jeżeli jest młodsze, niż wskazuje na to ograniczenie wiekowe?",
-            answer: `Adnotacja dotycząca ograniczenia wiekowego jest wyłącznie kwestią informacyjną, określoną przez dystrybutora filmu. 
-            Rodzice i opiekunowie prawni ponoszą pełną odpowiedzialność za treści, z którymi podczas seansu spotka się młody widz. 
-            Prosimy opiekunów, by przed podjęciem decyzji o udziale w projekcji młodego widza, uważnie zapoznawali się nie tylko z sugerowaną przez dystrybutora kategorią wiekową, ale również z opisem i zwiastunem filmu.`
+            answer: "Rodzice i opiekunowie prawni ponoszą pełną odpowiedzialność za treści, z którymi podczas seansu spotka się młody widz."
         },
         {
             question: "Czy godzina podana w repertuarze jest godziną rozpoczęcia seansu?",
@@ -37,8 +31,7 @@ const faqData = {
         },
         {
             question: "Dlaczego w moim kinie nie są wyświetlane wszystkie filmy?",
-            answer: `Nieustannie staramy się dostosować repertuar do wymagań i oczekiwań naszych klientów, jednak jego finalny układ zależny jest od różnych czynników: rozkład i ilość sal w naszych kinach, 
-            popularność filmu, ilość premier wypadających w danym tygodniu repertuarowym.`
+            answer: "Nieustannie staramy się dostosować repertuar do wymagań i oczekiwań naszych klientów, jednak jego finalny układ zależny jest od różnych czynników."
         },
         {
             question: "Dlaczego film, którego premiera wypada w piątek, jest wyświetlany już w środę?",
@@ -58,10 +51,75 @@ const faqData = {
             "Zakup biletów": [
                 {
                     question: "W jaki sposób mogę dokonać zakupu biletu?",
-                    answer: "Możesz kupić bilet online, w aplikacji lub w kasie kina."
-                }
+                    answer: `Możesz dokonać zakupu biletu logując się na swoje konto online za pośrednictwem naszej strony internetowej lub aplikacji. 
+                    Jeżeli nie posiadasz konta, zarejestruj się wcześniej na stronie. 
+                    Możesz również dokonać zakupu bez rejestracji, jako Gość. 
+                    Alternatywnie, możesz udać się do kina i zakupić bilet w kasie – pod warunkiem dostępności repertuaru oraz miejsc na wybrany seans.`
+                },
+                {
+                    question: "Dokonałem zakupu biletów, gdzie mogę je znaleźć?",
+                    answer: `Jeżeli transakcja została zakończona pomyślnie, bilety wraz z potwierdzeniem trafią na adres e-mail podany podczas zakupu. 
+                    Możesz również zalogować się na swoje konto na naszej stronie internetowej lub w aplikacji mobilnej – w zakładce „Moje Bilety” znajdziesz zakupione bilety, 
+                    które możesz okazać w kinie podczas kontroli.`
+                },
+                {
+                    question: "Czy podczas kontroli biletów w kinie mogę okazać bilety na telefonie?",
+                    answer: `Tak. Nie ma potrzeby drukowania biletów, możesz okazać je na smartfonie lub innym nośniku elektronicznym.`
+                },
+                {
+                    question: "Nie mam ze sobą biletów internetowych. Czy istnieje możliwość uzyskania w kasie kopii biletów zakupionych online?",
+                    answer: `Tak. Możesz poprosić Obsługę kina w barze kinowym o wydrukowanie zakupionych biletów, w tym celu przygotuj dane podane podczas rejestracji, w celu odnalezienia transakcji.`
+                },
+                {
+                    question: "Czy mogę zarezerwować bilety?",
+                    answer: `Zarówno w kinie jak i w witrynach możliwy jest wyłącznie zakup biletów, nie ma możliwości rezerwacji. Jeżeli planowane jest wyjście grupowe z placówki, możliwe jest dokonanie 
+                    rezerwacji grupowej po kontakcie z Biurem Rezerwacji Grupowych. Dane kontaktowe dostępne są na naszej stronie internetowej w zakładce SZKOŁY.`
+                },
+                {
+                    question: "Jak otrzymać fakturę za zakup biletów?",
+                    answer: `Jeżeli dokonałeś zakupu biletów internetowych skontaktuj się z Biurem Obsługi Klienta na adres bok@cinema-city.pl w celu uzyskania faktury, podając dane do faktury oraz numer 
+                    zamówienia. W celu otrzymania faktury za bilety zakupione w kinie zgłoś się do obsługi kina wraz z paragonem lub biletem w przypadku zakupu w biletomacie.`
+                },
+                {
+                    question: "Gdzie znajdę cennik biletów?",
+                    answer: `Cennik biletów można zweryfikować w kinie lub na naszej stronie internetowej. Należy wybrać ULUBIONE KINO, następnie na dole strony wejść w zakładkę O KINIE.`
+                },
+                {
+                    question: "Czy okulary 3D są zwrotne?",
+                    answer: `Nie, okulary 3D nie podlegają zwrotowi. Okulary 3D oraz 3D IMAX możesz zachować celem wykorzystania na kolejne seanse 3D w naszych kinach.`
+                },
+                {
+                    question: "Czy okulary 3D są dostępne w mniejszej wersji dla dzieci?",
+                    answer: `Tak. Okulary 3D dostępne są w dwóch wariantach: w wersji standardowej dla dorosłych lub w wersji mniejszej dla dzieci. `
+                },
+
             ],
             "Zwrot biletów": [
+                {
+                    question: "Czy mogę zwrócić bilet?",
+                    answer: "Bilety można zwrócić maksymalnie 2 godziny przed seansem."
+                },
+                {
+                    question: "W jaki sposób mogę zwrócić bilet zakupiony online?",
+                    answer: "Zaloguj się na swoje konto na stronie internetowej lub w aplikacji i dokonaj anulacji wybranych biletów. Pamiętaj, że zgodnie z regulaminem anulacja biletów możliwa jest do 2 godzin przed rozpoczęciem seansu. Po upływie tego czasu bilet nie podlega zwrotowi."
+                },
+                {
+                    question: "Czy mogę zwrócić bilety zakupione z użyciem vouchera lub karty podarunkowej?",
+                    answer: "Zgodnie z regulaminem, bilet zakupiony przy użyciu vouchera lub karty podarunkowej nie podlega zwrotowi."
+                },
+                {
+                    question: "Czy mogę zwrócić bilety zakupione z użyciem vouchera lub karty podarunkowej?",
+                    answer: "Zgodnie z regulaminem, bilet zakupiony przy użyciu vouchera lub karty podarunkowej nie podlega zwrotowi."
+                },
+
+            ],
+            "Bilety zniżkowe": [
+                {
+                    question: "Czy mogę zwrócić bilet?",
+                    answer: "Bilety można zwrócić maksymalnie 2 godziny przed seansem."
+                }
+            ],
+            "Seanse specjalne": [
                 {
                     question: "Czy mogę zwrócić bilet?",
                     answer: "Bilety można zwrócić maksymalnie 2 godziny przed seansem."
@@ -91,11 +149,16 @@ const faqData = {
     }
 };
 
-
-
 export default function ContactPage() {
     const [activeCategory, setActiveCategory] = useState('Repertuar');
     const [activeSubcategory, setActiveSubcategory] = useState(null);
+
+    useEffect(() => {
+        if (!Array.isArray(faqData[activeCategory])) {
+            const firstSub = Object.keys(faqData[activeCategory].subcategories)[0];
+            setActiveSubcategory(firstSub);
+        }
+    }, [activeCategory]);
 
     return (
         <div className="contact-page d-flex flex-column">
@@ -130,7 +193,7 @@ export default function ContactPage() {
                                         className={`w-100 mb-2 sidebar-btn ${category === activeCategory ? 'btn-warning' : 'btn-secondary'}`}
                                         onClick={() => {
                                             setActiveCategory(category);
-                                            setActiveSubcategory(null); // wyczyść podkategorię jeśli zmieniasz kategorię
+                                            setActiveSubcategory(null);
                                         }}
                                     >
                                         {category}
@@ -156,8 +219,7 @@ export default function ContactPage() {
 
                         <Col md={9} className="faq-content">
                             {Array.isArray(faqData[activeCategory]) ? (
-                                // 🔸 Repertuar – bez podkategorii
-                                <Accordion defaultActiveKey="0">
+                                <Accordion defaultActiveKey="0" className="rounded-accordion">
                                     {faqData[activeCategory].map((item, index) => (
                                         <Accordion.Item eventKey={index.toString()} key={index}>
                                             <Accordion.Header>{item.question}</Accordion.Header>
@@ -166,24 +228,16 @@ export default function ContactPage() {
                                     ))}
                                 </Accordion>
                             ) : (
-                                // 🔸 Kategoria z subkategoriami – np. „Bilety i Zwroty”
-                                <>
-                                   
-
-                                    {activeSubcategory && (
-                                        <>
-                                            <h4 className="text-white mb-4">{activeSubcategory}</h4>
-                                            <Accordion defaultActiveKey="0">
-                                                {faqData[activeCategory].subcategories[activeSubcategory].map((item, index) => (
-                                                    <Accordion.Item eventKey={index.toString()} key={index}>
-                                                        <Accordion.Header>{item.question}</Accordion.Header>
-                                                        <Accordion.Body>{item.answer}</Accordion.Body>
-                                                    </Accordion.Item>
-                                                ))}
-                                            </Accordion>
-                                        </>
-                                    )}
-                                </>
+                                activeSubcategory && (
+                                        <Accordion defaultActiveKey="0" className="rounded-accordion">
+                                        {faqData[activeCategory].subcategories[activeSubcategory].map((item, index) => (
+                                            <Accordion.Item eventKey={index.toString()} key={index}>
+                                                <Accordion.Header>{item.question}</Accordion.Header>
+                                                <Accordion.Body>{item.answer}</Accordion.Body>
+                                            </Accordion.Item>
+                                        ))}
+                                    </Accordion>
+                                )
                             )}
                         </Col>
                     </Row>
@@ -191,7 +245,7 @@ export default function ContactPage() {
                     <Row className="mt-5 text-center">
                         <Col>
                             <h4 className="text-white">Nie możesz znaleźć tego, czego potrzebujesz?</h4>
-                            <button class="contact-orange-button">
+                            <button className="contact-orange-button">
                                 Skontaktuj się z nami
                             </button>
                         </Col>
