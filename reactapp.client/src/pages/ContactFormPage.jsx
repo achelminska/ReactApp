@@ -1,60 +1,105 @@
 ﻿import React, { useState } from 'react';
+import Select from 'react-select';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import '../styles/contactform.scss';
 
 const options = [
-    'Zakup biletów',
-    'Karta Unlimited',
-    'Konto Online',
-    'Vouchery i Karty Podarunkowe'
+    { value: 'Zakup biletów', label: 'Zakup biletów' },
+    { value: 'Karta Unlimited', label: 'Karta Unlimited' },
+    { value: 'Konto Online', label: 'Konto Online' },
+    { value: 'Vouchery i Karty Podarunkowe', label: 'Vouchery i Karty Podarunkowe' }
 ];
 
+const selectOptionsMap = {
+    'Zakup biletów': [
+        { value: 'potwierdzenie', label: 'Brak potwierdzenia zakupu biletów' },
+        { value: 'zamowienie', label: 'Problem ze zwrotem biletów' },
+        { value: 'firmy', label: 'Problem z zakupem biletów' },
+    ],
+    'Karta Unlimited': [
+        { value: 'potwierdzenie', label: 'Rozwiązanie umowy' },
+        { value: 'zamowienie', label: 'Przedłużenie umowy' },
+        { value: 'firmy', label: 'Zaległa płatność' },
+    ],
+    'Konto Online': [
+        { value: 'potwierdzenie', label: 'Problem z logowaniem' },
+        { value: 'zamowienie', label: 'Problem ze zmianą hasła' },
+        { value: 'firmy', label: 'Zmiana danych' },
+    ],
+    'Vouchery i Karty Podarunkowe': [
+        { value: 'voucher', label: 'Problem z realizacją vouchera / karty podarunkowej' },
+        { value: 'zamowienie', label: 'Problem z zamówieniem' },
+        { value: 'firmy', label: 'Zakup dla firm' },
+    ]
+};
+
+const cinemaLocations = [
+    'Warszawa', 'Kraków', 'Poznań', 'Wrocław', 'Łódź', 'Katowice', 'Lublin', 'Częstochowa', 'Toruń',
+    'Bydgoszcz', 'Zielona Góra', 'Wałbrzych', 'Gliwice', 'Sosnowiec', 'Ruda Śląska', 'Rybnik',
+    'Bytom', 'Bielsko-Biała', 'Starogard Gdański', 'Cieszyn', 'Elbląg'
+].map(city => ({ value: city, label: city }));
+
+const customSelectStyles = {
+    control: (base) => ({
+        ...base,
+        backgroundColor: '#000',
+        color: '#fff',
+        borderRadius: '20px',
+        border: '1px solid #666',
+        padding: '2px 4px',
+    }),
+    menu: (base) => ({
+        ...base,
+        backgroundColor: '#000',
+        borderRadius: '20px',
+        border: '1px solid #666',
+        overflow: 'hidden',
+    }),
+    option: (base, { isFocused }) => ({
+        ...base,
+        backgroundColor: isFocused ? '#333' : '#000',
+        color: '#fff',
+        cursor: 'pointer',
+    }),
+    singleValue: (base) => ({
+        ...base,
+        color: '#fff',
+    }),
+};
+
 export default function ContactFormPage() {
-    const [selected, setSelected] = useState('');
+    const [selected, setSelected] = useState(null);
+    const [reason, setReason] = useState(null);
+    const [location, setLocation] = useState(null);
 
-    return (
-        <div className="contact-form-page">
-            <div className="contact-form-content">
-            {/* Nagłówek z logo i przyciskami */}
-            <div className="section-with-line">
-                <div className="contact-header d-flex justify-content-between align-items-center px-5 py-3">
-                    <img src="/image/logo2.png" alt="Logo" style={{ height: '50px' }} />
-                    <div>
-                        <Button variant="outline-light" className="me-2 btn-knowledge">Baza wiedzy</Button>
-                        <Button
-                            as={Link}
-                            to="/kontakt/formularz"
-                            className="contact-orange-button"
-                        >
-                            Skontaktuj się z nami
-                        </Button>
-                    </div>
-                </div>
-            </div>
+    const renderForm = () => {
+        if (!selected) return null;
 
-            <h2 className="text-center mt-4">Skontaktuj się z nami</h2>
-            <div className="dropdown-container text-center">
-                <select
-                    value={selected}
-                    onChange={(e) => setSelected(e.target.value)}
-                    className="dropdown-select"
-                >
-                    <option value="">Wybierz kategorię...</option>
-                    {options.map((option, idx) => (
-                        <option key={idx} value={option}>{option}</option>
-                    ))}
-                </select>
-            </div>
+        const reasonOptions = selectOptionsMap[selected.value];
 
-            {selected && (
-                <div className="form-wrapper">
-                    <form>
-                        <label>Powód zgłoszenia*</label>
-                        <select><option>Wybierz...</option></select>
+        return (
+            <form>
+                <label>Powód zgłoszenia*</label>
+                <Select
+                    options={reasonOptions}
+                    styles={customSelectStyles}
+                    placeholder="Wybierz..."
+                    value={reason}
+                    onChange={setReason}
+                />
 
-                        <label>Numer transakcji</label>
+                {selected.value === 'Karta Unlimited' && (
+                    <>
+                        <label>Numer karty Unlimited*</label>
+                        <input type="text" />
+                    </>
+                )}
+
+                {selected.value === 'Zakup biletów' && (
+                    <>
+                        <label>Numer transakcji (jeśli dotyczy)</label>
                         <input type="text" />
 
                         <label>Tytuł seansu*</label>
@@ -65,33 +110,83 @@ export default function ContactFormPage() {
 
                         <label>Godzina seansu*</label>
                         <input type="time" />
+                    </>
+                )}
 
+                {selected.value === 'Vouchery i Karty Podarunkowe' && (
+                    <>
+                        <label>Numer vouchera (jeśli dotyczy)</label>
+                        <input type="text" />
+                    </>
+                )}
+
+                {(selected.value === 'Zakup biletów' || selected.value === 'Vouchery i Karty Podarunkowe') && (
+                    <>
                         <label>Lokalizacja kina*</label>
-                        <select><option>Wybierz...</option></select>
+                        <Select
+                            options={cinemaLocations}
+                            styles={customSelectStyles}
+                            placeholder="Wybierz..."
+                            value={location}
+                            onChange={setLocation}
+                        />
+                    </>
+                )}
 
-                        <label>Imię*</label>
-                        <input type="text" />
+                <label>Imię*</label>
+                <input type="text" />
 
-                        <label>Nazwisko*</label>
-                        <input type="text" />
+                <label>Nazwisko*</label>
+                <input type="text" />
 
-                        <label>Adres e-mail*</label>
-                        <input type="email" />
+                <label>Adres e-mail*</label>
+                <input type="email" />
 
-                        <label>Numer telefonu</label>
-                        <input type="tel" />
+                <label>Numer telefonu{selected.value === 'Karta Unlimited' ? '*' : ''}</label>
+                <input type="tel" />
 
-                        <label>Temat*</label>
-                        <input type="text" />
+                <label>Temat*</label>
+                <input type="text" />
 
-                        <label>Treść wiadomości*</label>
-                        <textarea rows="5"></textarea>
+                <label>Treść wiadomości*</label>
+                <textarea rows="5"></textarea>
 
-                        <button type="submit" className="submit-button">Wyślij</button>
-                    </form>
+                <button type="submit" className="submit-button">Wyślij</button>
+            </form>
+        );
+    };
+
+    return (
+        <div className="contact-form-page">
+            <div className="contact-form-content">
+                <div className="section-with-line">
+                    <div className="contact-header d-flex justify-content-between align-items-center px-5 py-3">
+                        <img src="/image/logo2.png" alt="Logo" style={{ height: '50px' }} />
+                        <div>
+                            <Button variant="outline-light" className="me-2 btn-knowledge">Baza wiedzy</Button>
+                            <Button as={Link} to="/kontakt/formularz" className="contact-orange-button">Skontaktuj się z nami</Button>
+                        </div>
+                    </div>
                 </div>
-            )}
+
+                <h2 className="text-center mt-4">Skontaktuj się z nami</h2>
+                <div className="dropdown-container text-center" style={{ width: '50%', margin: '0 auto' }}>
+                    <Select
+                        options={options}
+                        styles={customSelectStyles}
+                        placeholder="Wybierz kategorię..."
+                        value={selected}
+                        onChange={(option) => {
+                            setSelected(option);
+                            setReason(null);
+                            setLocation(null);
+                        }}
+                    />
+                </div>
+
+                {selected && <div className="form-wrapper">{renderForm()}</div>}
             </div>
+
             <Footer />
         </div>
     );
