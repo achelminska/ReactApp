@@ -7,7 +7,7 @@ import SearchSection from './components/SearchSection';
 import ScreenUpcoming from './components/ScreenUpcoming';
 import ScreenFamily from './components/ScreenFamily';
 import ContactPage from './pages/ContactPage';
-
+import ContactFormPage from './pages/ContactFormPage';
 
 function App() {
     return (
@@ -28,6 +28,7 @@ function App() {
                     }
                 />
                 <Route path="/kontakt" element={<ContactPage />} />
+                <Route path="/kontakt/formularz" element={<ContactFormPage />} />
             </Routes>
         </BrowserRouter>
     );
