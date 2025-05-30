@@ -535,7 +535,7 @@ export default function ContactPage() {
 
                         <Col md={9} className="faq-content">
                             {Array.isArray(faqData[activeCategory]) ? (
-                                <Accordion defaultActiveKey="0" className="rounded-accordion">
+                                <Accordion className="rounded-accordion">
                                     {faqData[activeCategory].map((item, index) => (
                                         <Accordion.Item eventKey={index.toString()} key={index}>
                                             <Accordion.Header>{item.question}</Accordion.Header>
@@ -552,7 +552,7 @@ export default function ContactPage() {
                                 </Accordion>
                             ) : (
                                 activeSubcategory && (
-                                        <Accordion defaultActiveKey="0" className="rounded-accordion">
+                                        <Accordion className="rounded-accordion">
                                         {faqData[activeCategory].subcategories[activeSubcategory].map((item, index) => (
                                             <Accordion.Item eventKey={index.toString()} key={index}>
                                                 <Accordion.Header>{item.question}</Accordion.Header>

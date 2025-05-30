@@ -4,8 +4,15 @@ import '../styles/repertuar.scss';
 import CarouselBanner from '../components/CarouselBanner';
 import { weeklyMovies } from '../data/weeklyMovies';
 
-const dayKeys = ['dzis', 'so', 'nd', 'pn', 'wt', 'sr', 'cz'];
-const dayLabels = ['Dziś', 'So', 'Nd', 'Pn', 'Wt', 'Śr', 'Cz'];
+const fullDayKeys = ['nd', 'pn', 'wt', 'sr', 'cz', 'pt', 'so'];
+const shortDayLabels = ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'];
+
+const todayIndex = new Date().getDay();
+const rotatedKeys = [...fullDayKeys.slice(todayIndex), ...fullDayKeys.slice(0, todayIndex)];
+const rotatedLabels = [...shortDayLabels.slice(todayIndex), ...shortDayLabels.slice(0, todayIndex)];
+
+const dayKeys = ['dzis', ...rotatedKeys.slice(1, 7)];
+const dayLabels = ['Dziś', ...rotatedLabels.slice(1, 7)];
 
 export default function RepertuarPage() {
     const location = useLocation();
@@ -40,7 +47,7 @@ export default function RepertuarPage() {
                             {label}
                         </span>
                     ))}
-                    <div className="current-date">PIĄTEK {today}</div>
+                    <div className="current-date">{today}</div>
                 </div>
 
                 <div className="filter-bar">

@@ -1,6 +1,7 @@
 ﻿import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 import '../styles/seats.scss';
 
 export default function SeatSelectionPage() {
@@ -131,6 +132,7 @@ export default function SeatSelectionPage() {
                 </button>
                 <button className="back-button" onClick={handleBack}>Wróć</button>
             </div>
+            <Footer />
         </div>
     );
 }
