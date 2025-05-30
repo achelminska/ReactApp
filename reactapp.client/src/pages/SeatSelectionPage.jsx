@@ -5,11 +5,28 @@ import '../styles/seats.scss';
 export default function SeatSelectionPage() {
     const { state } = useLocation();
     const { kino, data, film, godzina } = state || {};
-    const rows = 10;
-    const seatsPerRow = 12;
+
+    // Każdy rząd podzielony: [lewa część, odstęp (null), prawa część]
+    const layout = [
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null,  8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null,  8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null,  8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [16, 15, 14, 13, 12, 11, 10, 9, null, null, null, 8, 7, 6, 5, 4, 3, 2, 1],
+        [18 ,17 ,16, 15, 14, 13, 12, 11, 10, null, null, null,9, 8, 7, 6, 5, 4, 3, 2, 1],
+        [22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    ];
+
     const [selectedSeats, setSelectedSeats] = useState([]);
 
-    const toggleSeat = (seatId) => {
+    const toggleSeat = (rowIndex, seatIndex) => {
+        const seatId = `R${rowIndex + 1}S${seatIndex + 1}`;
         setSelectedSeats((prev) =>
             prev.includes(seatId)
                 ? prev.filter((s) => s !== seatId)
@@ -23,7 +40,6 @@ export default function SeatSelectionPage() {
             return;
         }
         alert(`Wybrane miejsca: ${selectedSeats.join(', ')}`);
-        // Tu można potem dodać np. przejście dalej z tymi danymi
     };
 
     return (
@@ -40,18 +56,22 @@ export default function SeatSelectionPage() {
             <div className="screen-label">EKRAN</div>
 
             <div className="seats">
-                {[...Array(rows)].map((_, rowIndex) => (
+                {layout.map((row, rowIndex) => (
                     <div key={rowIndex} className="seat-row">
-                        {[...Array(seatsPerRow)].map((_, seatIndex) => {
+                        <div className="row-number">{rowIndex + 1}</div>
+                        {row.map((seat, seatIndex) => {
+                            if (seat === null) {
+                                return <div key={seatIndex} className="seat empty"></div>;
+                            }
                             const seatId = `R${rowIndex + 1}S${seatIndex + 1}`;
                             const isSelected = selectedSeats.includes(seatId);
                             return (
                                 <div
                                     key={seatId}
                                     className={`seat ${isSelected ? 'selected' : ''}`}
-                                    onClick={() => toggleSeat(seatId)}
+                                    onClick={() => toggleSeat(rowIndex, seatIndex)}
                                 >
-                                    {seatIndex + 1}
+                                    {seat}
                                 </div>
                             );
                         })}

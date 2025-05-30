@@ -16,7 +16,7 @@
         margin: 40px auto 0;
         width: 30%;
         height: 40px;
-        background: linear-gradient(to top, #ffffff, #e0e0e0);
+        background: linear-gradient(to top, #dcdcdc, #c0c0c0); 
         border-bottom: 8px solid black;
         border-radius: 200px 200px 0 0 / 40px 40px 0 0;
         position: relative;
@@ -42,34 +42,51 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.8rem;
 
         .seat-row {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            align-items: center;
+
+            .row-label {
+                width: 20px;
+                margin-right: 0.5rem;
+                text-align: right;
+                font-size: 0.8rem;
+                color: #aaa;
+            }
         }
 
         .seat {
-            width: 30px;
-            height: 30px;
-            background-color: #666;
-            border-radius: 5px;
+            width: 40px;
+            height: 40px;
+            background-color: #f5821e;
+            color: black;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            border: 2px solid transparent;
 
             &:hover {
-                background-color: #888;
+                background-color: #ffa94d;
             }
 
             &.selected {
-                background-color: #F5821E;
-                color: black;
-                font-weight: bold;
+                background-color: black;
+                color: #f5821e;
+                border-color: #f5821e;
             }
+        }
+
+        .seat.empty {
+            background-color: transparent;
+            visibility: hidden;
         }
     }
 
