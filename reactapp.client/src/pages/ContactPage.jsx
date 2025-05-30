@@ -473,7 +473,9 @@ export default function ContactPage() {
             <div className="flex-grow-1">
                 <div className="section-with-line">
                     <div className="contact-header d-flex justify-content-between align-items-center px-5 py-3">
-                        <img src="/image/logo2.png" alt="Logo" style={{ height: '50px' }} />
+                        <Link to="/">
+                            <img src="/image/logo2.png" alt="Logo" style={{ height: '50px' }} />
+                        </Link>
                         <div>
                             <Button variant="outline-light" className="me-2 btn-knowledge">Baza wiedzy</Button>
                             <Button

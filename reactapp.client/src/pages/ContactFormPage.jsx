@@ -48,7 +48,8 @@ const customSelectStyles = {
         color: '#fff',
         borderRadius: '20px',
         border: '1px solid #666',
-        padding: '2px 4px',
+        padding: '10px 4px 0px 4px',
+        textAlign: 'left',
     }),
     menu: (base) => ({
         ...base,
@@ -161,9 +162,18 @@ export default function ContactFormPage() {
             <div className="contact-form-content">
                 <div className="section-with-line">
                     <div className="contact-header d-flex justify-content-between align-items-center px-5 py-3">
-                        <img src="/image/logo2.png" alt="Logo" style={{ height: '50px' }} />
+                        <Link to="/">
+                            <img src="/image/logo2.png" alt="Logo" style={{ height: '50px' }} />
+                        </Link>
                         <div>
-                            <Button variant="outline-light" className="me-2 btn-knowledge">Baza wiedzy</Button>
+                            <Button
+                                as={Link}
+                                to="/kontakt/contactPage"
+                                variant="outline-light"
+                                className="me-2 btn-knowledge"
+                            >
+                                Baza wiedzy
+                            </Button>
                             <Button as={Link} to="/kontakt/formularz" className="contact-orange-button">Skontaktuj się z nami</Button>
                         </div>
                     </div>

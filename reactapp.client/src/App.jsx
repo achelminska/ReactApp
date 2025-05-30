@@ -8,6 +8,7 @@ import ScreenUpcoming from './components/ScreenUpcoming';
 import ScreenFamily from './components/ScreenFamily';
 import ContactPage from './pages/ContactPage';
 import ContactFormPage from './pages/ContactFormPage';
+import SeatSelectionPage from './pages/SeatSelectionPage';
 
 function App() {
     return (
@@ -29,6 +30,8 @@ function App() {
                 />
                 <Route path="/kontakt" element={<ContactPage />} />
                 <Route path="/kontakt/formularz" element={<ContactFormPage />} />
+                <Route path="/kontakt/contactPage" element={<ContactPage />} />
+                <Route path="/wybor-miejsca" element={<SeatSelectionPage />} />
             </Routes>
         </BrowserRouter>
     );
