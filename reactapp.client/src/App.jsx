@@ -9,6 +9,8 @@ import ScreenFamily from './components/ScreenFamily';
 import ContactPage from './pages/ContactPage';
 import ContactFormPage from './pages/ContactFormPage';
 import SeatSelectionPage from './pages/SeatSelectionPage';
+import TicketSelectionPage from './pages/TicketSelectionPage';
+import OrderSummaryPage from './pages/OrderSummaryPage';
 
 function App() {
     return (
@@ -32,6 +34,8 @@ function App() {
                 <Route path="/kontakt/formularz" element={<ContactFormPage />} />
                 <Route path="/kontakt/contactPage" element={<ContactPage />} />
                 <Route path="/wybor-miejsca" element={<SeatSelectionPage />} />
+                <Route path="/ticket-selection" element={<TicketSelectionPage />} />
+                <Route path="/order-summary" element={<OrderSummaryPage />} />
             </Routes>
         </BrowserRouter>
     );

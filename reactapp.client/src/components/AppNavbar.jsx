@@ -9,6 +9,7 @@ import LoginOffcanvas from '../components/LoginOffcanvas';
 import RegisterOffcanvas from '../components/RegisterOffcanvas';
 import LoginFormComponent from '../components/LoginFormComponent';
 import RegisterFormComponent from '../components/RegisterFormComponent';
+import { cities } from '../data/cities';
 import '../styles/useroffcanvas.scss';
 
 export default function AppNavbar() {
@@ -16,6 +17,8 @@ export default function AppNavbar() {
     const [mobileTab, setMobileTab] = useState('login');
     const [showLoginOff, setShowLoginOff] = useState(false);
     const [showRegisterOff, setShowRegisterOff] = useState(false);
+    const [selectedCity, setSelectedCity] = useState(null);
+    const [showCityDropdown, setShowCityDropdown] = useState(false);
     const navigate = useNavigate();
     const handleSearch = (query) => {
         navigate(`/search?query=${encodeURIComponent(query)}`);
@@ -136,9 +139,33 @@ export default function AppNavbar() {
                                     className="d-inline-block align-top"
                                 />
                             </Navbar.Brand>
-                            <Nav.Link href="#action4" className="linksMenuDesktop">
-                                <i className="bi bi-geo-alt-fill me-2" style={{ fontSize: '1rem' }}></i>Wybierz miasto
-                            </Nav.Link>
+                            <div className="city-selector position-relative">
+                                <div
+                                    className="linksMenuDesktop city-selector"
+                                    role="button"
+                                    onClick={() => setShowCityDropdown(!showCityDropdown)}
+                                >
+                                    <i className="bi bi-geo-alt-fill me-2" style={{ fontSize: '1rem' }}></i>
+                                    {selectedCity || 'Wybierz miasto'}
+                                    <i className="bi bi-chevron-down ms-2" />
+                                </div>
+
+                                {showCityDropdown && (
+                                    <ul className="city-dropdown">
+                                        {cities.map(city => (
+                                            <li
+                                                key={city}
+                                                onClick={() => {
+                                                    setSelectedCity(city);
+                                                    setShowCityDropdown(false);
+                                                }}
+                                            >
+                                                {city}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
                             <div className="vertical-divider d-none d-lg-block"></div>
                             <Nav.Link className="linksMenuDesktop" role="button" onClick={() => setShowLoginOff(true)}><i className="bi bi-person me-2" style={{ fontSize: '1rem' }}></i>Logowanie</Nav.Link>
                             <div className="vertical-divider d-none d-lg-block"></div>

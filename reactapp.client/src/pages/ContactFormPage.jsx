@@ -74,6 +74,7 @@ export default function ContactFormPage() {
     const [selected, setSelected] = useState(null);
     const [reason, setReason] = useState(null);
     const [location, setLocation] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     const renderForm = () => {
         if (!selected) return null;
@@ -152,7 +153,24 @@ export default function ContactFormPage() {
                 <label>Treść wiadomości*</label>
                 <textarea rows="5"></textarea>
 
-                <button type="submit" className="submit-button">Wyślij</button>
+                <button
+                    type="button"
+                    className="submit-button"
+                    onClick={() => setShowModal(true)}
+                >
+                    Wyślij
+                </button>
+                {showModal && (
+                    <div className="modal-overlay">
+                        <div className="modal-content">
+                            <p>Twoje zapytanie zostało wysłane.<br />Kopię dostaniesz na emaila.</p>
+                            <button onClick={() => {
+                                setShowModal(false);
+                                window.location.reload(); 
+                            }}>Zamknij</button>
+                        </div>
+                    </div>
+                )}
             </form>
         );
     };

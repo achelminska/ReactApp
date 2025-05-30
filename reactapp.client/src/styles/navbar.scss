@@ -141,3 +141,34 @@
     font-size: 1.2rem;
     color: $primary !important;
 }
+
+.city-selector {
+    color: #8C8C8C;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .city-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #000;
+        color: #fff;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        z-index: 999;
+        border: 1px solid #f5821e;
+        width: max-content;
+
+        li {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            white-space: nowrap;
+
+            &:hover {
+                background: #f5821e;
+            }
+        }
+    }
+}

@@ -24,7 +24,7 @@ export default function SeatSelectionPage() {
         [22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     ];
     const occupiedSeats = [
-        'R3S2', 'R3S3', 'R4S5', 'R5S10', 'R6S12', 'R8S18', 'R8S17', 'R8S16', 'R12S5'
+        'R3S2', 'R3S3', 'R3S4', 'R4S5', 'R5S10', 'R6S12', 'R6S13', 'R8S18', 'R8S17', 'R8S16', 'R12S5'
     ];
     const navigate = useNavigate();
     const handleBack = () => {
@@ -33,8 +33,8 @@ export default function SeatSelectionPage() {
 
     const [selectedSeats, setSelectedSeats] = useState([]);
 
-    const toggleSeat = (rowIndex, seatIndex) => {
-        const seatId = `R${rowIndex + 1}S${seatIndex + 1}`;
+    const toggleSeat = (rowIndex, seat) => {
+        const seatId = `R${rowIndex + 1}S${seat}`;
         setSelectedSeats((prev) =>
             prev.includes(seatId)
                 ? prev.filter((s) => s !== seatId)
@@ -47,7 +47,17 @@ export default function SeatSelectionPage() {
             alert("Wybierz przynajmniej jedno miejsce!");
             return;
         }
-        alert(`Wybrane miejsca: ${selectedSeats.join(', ')}`);
+
+       
+        navigate('/ticket-selection', {
+            state: {
+                kino,
+                data,
+                film,
+                godzina,
+                selectedSeats
+            }
+        });
     };
 
     return (
@@ -85,7 +95,7 @@ export default function SeatSelectionPage() {
                             if (seat === null) {
                                 return <div key={seatIndex} className="seat empty"></div>;
                             }
-                            const seatId = `R${rowIndex + 1}S${seatIndex + 1}`;
+                            const seatId = `R${rowIndex + 1}S${seat}`;
                             const isSelected = selectedSeats.includes(seatId);
                             const isOccupied = occupiedSeats.includes(seatId);
                             return (
@@ -94,7 +104,7 @@ export default function SeatSelectionPage() {
                                     className={`seat ${isSelected ? 'selected' : ''}`}
                                     onClick={() => toggleSeat(rowIndex, seatIndex)}
                                     className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''}`}
-                                    onClick={() => !isOccupied && toggleSeat(rowIndex, seatIndex)}
+                                    onClick={() => !isOccupied && toggleSeat(rowIndex, seat)}
                                 >
                                     {seat}
                                 </div>

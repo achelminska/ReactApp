@@ -2709,7 +2709,7 @@ export default function BuyTicketButton() {
                                     });
                                 }}
                             >
-                                Szukaj
+                                Dalej
                             </Button>
                         </div>
                     </Form>
