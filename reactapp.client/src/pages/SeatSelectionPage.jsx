@@ -8,7 +8,7 @@ export default function SeatSelectionPage() {
     const { state } = useLocation();
     const { kino, data, film, godzina } = state || {};
 
-    // Każdy rząd podzielony: [lewa część, odstęp (null), prawa część]
+    
     const layout = [
         [16, 15, 14, 13, 12, 11, 10, 9, null, null, null,  8, 7, 6, 5, 4, 3, 2, 1],
         [16, 15, 14, 13, 12, 11, 10, 9, null, null, null,  8, 7, 6, 5, 4, 3, 2, 1],
@@ -88,7 +88,8 @@ export default function SeatSelectionPage() {
             <div className="screen-css" />
             <div className="screen-label">EKRAN</div>
 
-            <div className="seats">
+            <div className="seats-wrapper">
+                <div className="seats">
                 {layout.map((row, rowIndex) => (
                     <div key={rowIndex} className="seat-row">
                         <div className="row-number">{rowIndex + 1}</div>
@@ -113,6 +114,7 @@ export default function SeatSelectionPage() {
                         })}
                     </div>
                 ))}
+                </div>
             </div>
 
             <div className="bottom-bar">
