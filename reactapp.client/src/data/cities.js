@@ -1,9 +1,11 @@
-export const cities = [
-    'Biala Podlaska',
+﻿export const cities = [
+    'Biała Podlaska',
     'Warszawa',
-    'Krakow',
-    'Poznan',
-    'Wroclaw',
-    'Gdansk',
-
+    'Kraków',
+    'Poznań',
+    'Wrocław',
+    'Gdańsk',
+    'Łódź', 'Katowice', 'Lublin', 'Częstochowa', 'Toruń',
+    'Bydgoszcz', 'Zielona Góra', 'Wałbrzych', 'Gliwice', 'Sosnowiec', 'Ruda Śląska', 'Rybnik',
+    'Bytom', 'Bielsko-Biała', 'Starogard Gdański', 'Cieszyn', 'Elbląg'
 ];

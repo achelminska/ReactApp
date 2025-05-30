@@ -1,4 +1,4 @@
-import './styles/App.scss';
+﻿import './styles/App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import CarouselBanner from './components/CarouselBanner';
@@ -11,6 +11,7 @@ import ContactFormPage from './pages/ContactFormPage';
 import SeatSelectionPage from './pages/SeatSelectionPage';
 import TicketSelectionPage from './pages/TicketSelectionPage';
 import OrderSummaryPage from './pages/OrderSummaryPage';
+import RepertuarPage from './pages/RepertuarPage';
 
 function App() {
     return (
@@ -36,6 +37,15 @@ function App() {
                 <Route path="/wybor-miejsca" element={<SeatSelectionPage />} />
                 <Route path="/ticket-selection" element={<TicketSelectionPage />} />
                 <Route path="/order-summary" element={<OrderSummaryPage />} />
+                <Route path="/seat-selection" element={<SeatSelectionPage />} />
+                <Route
+                    path="/repertuar"
+                    element={
+                        <Layout>
+                            <RepertuarPage />
+                        </Layout>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     );

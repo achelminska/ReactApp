@@ -192,7 +192,19 @@ export default function AppNavbar() {
                 {/* DRUGI RZĄD - widoczny tylko na dużych ekranach */}
                 <Container className="d-none d-lg-flex justify-content-center">
                     <Nav className="gap-3 align-items-center">
-                        <Nav.Link href="#action1" className="linksMenuDesktop2">Repertuar</Nav.Link>
+                        <Nav.Link
+                            className="linksMenuDesktop2"
+                            role="button"
+                            onClick={() => {
+                                if (selectedCity) {
+                                    navigate('/repertuar', { state: { selectedCity } });
+                                } else {
+                                    alert("Wybierz miasto najpierw!");
+                                }
+                            }}
+                        >
+                            Repertuar
+                        </Nav.Link>
                         <div className="vertical-divider2 d-none d-lg-block"></div>
                         <Nav.Link href="#action2" className="linksMenuDesktop2">Zwiastuny</Nav.Link>
                         <div className="vertical-divider2 d-none d-lg-block"></div>
