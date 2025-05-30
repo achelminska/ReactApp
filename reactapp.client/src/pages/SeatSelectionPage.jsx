@@ -22,6 +22,9 @@ export default function SeatSelectionPage() {
         [18 ,17 ,16, 15, 14, 13, 12, 11, 10, null, null, null,9, 8, 7, 6, 5, 4, 3, 2, 1],
         [22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     ];
+    const occupiedSeats = [
+        'R3S2', 'R3S3', 'R4S5', 'R5S10', 'R6S12', 'R8S18', 'R8S17', 'R8S16', 'R12S5'
+    ];
 
     const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -65,11 +68,14 @@ export default function SeatSelectionPage() {
                             }
                             const seatId = `R${rowIndex + 1}S${seatIndex + 1}`;
                             const isSelected = selectedSeats.includes(seatId);
+                            const isOccupied = occupiedSeats.includes(seatId);
                             return (
                                 <div
                                     key={seatId}
                                     className={`seat ${isSelected ? 'selected' : ''}`}
                                     onClick={() => toggleSeat(rowIndex, seatIndex)}
+                                    className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''}`}
+                                    onClick={() => !isOccupied && toggleSeat(rowIndex, seatIndex)}
                                 >
                                     {seat}
                                 </div>
@@ -80,7 +86,20 @@ export default function SeatSelectionPage() {
             </div>
 
             <div className="bottom-bar">
-                <button onClick={handleSubmit}>Dalej</button>
+                <button
+                    onClick={handleSubmit}
+                    disabled={selectedSeats.length === 0}
+                    className={`submit-button ${selectedSeats.length === 0 ? 'disabled' : ''}`}
+                >
+                    <span className="main-label">Dalej</span>
+                    {selectedSeats.length > 0 && (
+                        <span className="sub-label">
+                            {selectedSeats.length === 1
+                                ? 'Wybrano jedno miejsce'
+                                : `Wybrano miejsc: ${selectedSeats.length}`}
+                        </span>
+                    )}
+                </button>
             </div>
         </div>
     );
