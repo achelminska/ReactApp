@@ -1,5 +1,6 @@
 ﻿import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/seats.scss';
 
 export default function SeatSelectionPage() {
@@ -25,6 +26,10 @@ export default function SeatSelectionPage() {
     const occupiedSeats = [
         'R3S2', 'R3S3', 'R4S5', 'R5S10', 'R6S12', 'R8S18', 'R8S17', 'R8S16', 'R12S5'
     ];
+    const navigate = useNavigate();
+    const handleBack = () => {
+        navigate('/');
+    };
 
     const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -47,13 +52,27 @@ export default function SeatSelectionPage() {
 
     return (
         <div className="seat-selection-page">
-            <div className="details">
-                <h2>Wybór miejsc</h2>
-                <p><strong>Kino:</strong> {kino}</p>
-                <p><strong>Data:</strong> {data}</p>
-                <p><strong>Film:</strong> {film}</p>
-                <p><strong>Godzina:</strong> {godzina}</p>
+
+            <div className="booking-header">
+                <div className="top-header">
+                    <div className="logo-container">
+                        <img src="/image/logo2.png" alt="Logo" />
+                    </div>
+
+                    <div className="top-bar">
+                        <div className="step active">1<br />Wybór miejsc</div>
+                        <div className="step">2<br />Wybór biletów</div>
+                        <div className="step">3<br />Zamówienie</div>
+                    </div>
+                </div>
+
+                <div className="movie-bar">
+                    <div className="movie-info">
+                        <strong>{film}</strong> – {kino} | {data} | {godzina}
+                    </div>
+                </div>
             </div>
+           
 
             <div className="screen-css" />
             <div className="screen-label">EKRAN</div>
@@ -100,6 +119,7 @@ export default function SeatSelectionPage() {
                         </span>
                     )}
                 </button>
+                <button className="back-button" onClick={handleBack}>Wróć</button>
             </div>
         </div>
     );
