@@ -35,7 +35,6 @@
         }
     }
 
-
     .section-with-line {
         position: relative;
         background: #000;
@@ -138,9 +137,6 @@
             padding: 0.6rem 2rem;
             font-weight: 600;
             border-radius: 30px;
-            padding: 0.6rem 2rem;
-            font-weight: 600;
-            border-radius: 30px;
             background-color: #F5821E;
             color: black;
             border: none;
@@ -150,73 +146,118 @@
             }
         }
     }
+}
 
+.contact-orange-button {
+    display: inline-block;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 0.4rem 1.5rem;
+    background-color: #F5821E;
+    border: 1px solid #F5821E;
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+        background-color: darken(#F5821E, 10%);
+        text-decoration: none;
+    }
+}
+
+.rounded-accordion .accordion-item {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.rounded-accordion .accordion-header,
+.rounded-accordion .accordion-body {
+    border-radius: 0;
+}
+
+.rounded-accordion .accordion-button {
+    border-radius: 0;
+}
+
+.submenu {
+    border-radius: 20px !important;
+    padding: 0.5rem 0;
+    background-color: #1e1f21;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.site-footer {
+    margin-bottom: 0 !important;
+}
+
+@media (max-width: 768px) {
     .contact-page {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-        margin: 0 auto;
-        background-color: #000;
-        color: white;
+        width: 95% !important;
 
-        .flex-grow-1 {
-            flex-grow: 1;
+        .contact-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+
+            .btn-knowledge,
+            .contact-orange-button {
+                width: 100%;
+                margin-top: 1rem;
+            }
         }
-    }
 
-    .contact-orange-button {
-        background-color: #F5821E;
-        color: black;
-        font-weight: 600;
-        border: none;
-        border-radius: 30px;
-        padding: 0.6rem 2rem;
+        .contact-body {
+            padding: 1rem;
 
-        &:hover {
-            background-color: #F5821E;
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .search-input {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
         }
-    }
 
-    .rounded-accordion .accordion-item {
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
+        .faq-sidebar {
+            order: 2;
+            margin-top: 2rem;
 
-    .rounded-accordion .accordion-header,
-    .rounded-accordion .accordion-body {
-        border-radius: 0;
-    }
+            .sidebar-btn {
+                font-size: 1rem;
+                padding: 0.6rem;
+            }
 
-    .rounded-accordion .accordion-button {
-        border-radius: 0;
-    }
-
-    .submenu {
-        border-radius: 20px !important;
-        padding: 0.5rem 0;
-        background-color: #1e1f21;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .contact-orange-button {
-        display: inline-block; 
-        font-weight: 600;
-        border-radius: 30px;
-        padding: 0.4rem 1.5rem;
-        background-color: #F5821E;
-        border: 1px solid #F5821E;
-        color: black;
-        text-decoration: none; 
-
-        &:hover {
-            background-color: darken(#F5821E, 10%);
-            text-decoration: none; 
+            .submenu {
+                padding: 0.5rem;
+            }
         }
-    }
 
-    .site-footer {
-        margin-bottom: 0 !important;
+        .faq-content {
+            order: 1;
+
+            .accordion-button {
+                font-size: 1rem;
+            }
+
+            .accordion-body {
+                font-size: 0.95rem;
+            }
+        }
+
+        .bottom-help,
+        .mt-5.text-center {
+            margin-top: 2rem !important;
+            text-align: center;
+
+            h4 {
+                font-size: 1rem;
+            }
+
+            .contact-orange-button {
+                margin-top: 1rem;
+                padding: 0.7rem 1.2rem;
+            }
+        }
     }
 }

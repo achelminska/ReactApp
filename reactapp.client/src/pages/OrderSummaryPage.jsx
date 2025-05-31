@@ -43,7 +43,7 @@ export default function OrderSummaryPage() {
             setSelectedMethod(method);
             setShowDialog(true);
             setTimeout(() => {
-                // Tu możesz dodać nawigację lub przekierowanie np. do bramki płatności
+               
                 console.log("Przekierowanie do płatności:", method);
             }, 3000);
         }

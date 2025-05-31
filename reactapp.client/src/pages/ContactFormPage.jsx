@@ -198,7 +198,13 @@ export default function ContactFormPage() {
                 </div>
 
                 <h2 className="text-center mt-4">Skontaktuj się z nami</h2>
-                <div className="dropdown-container text-center" style={{ width: '50%', margin: '0 auto' }}>
+                <div
+                    className="dropdown-container text-center"
+                    style={{
+                        width: window.innerWidth <= 768 ? '80%' : '50%',
+                        margin: '0 auto'
+                    }}
+                >
                     <Select
                         options={options}
                         styles={customSelectStyles}

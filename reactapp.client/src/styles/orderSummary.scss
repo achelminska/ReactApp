@@ -174,4 +174,99 @@
             transform: rotate(360deg);
         }
     }
+
+    @media (max-width: 768px) {
+        .order-page {
+            .booking-header {
+                .top-header {
+                    height: 50px;
+
+                    .logo-container {
+                        display: none;
+                    }
+
+                    .top-bar {
+                        position: relative;
+                        left: 0;
+                        transform: none;
+                        justify-content: center;
+                        width: 100%;
+                        font-size: 0.7rem;
+                        gap: 0.7rem;
+
+                        .step {
+                            line-height: 1.1;
+                        }
+                    }
+                }
+
+                .movie-bar {
+                    font-size: 0.75rem;
+                    padding: 0.4rem 0.5rem;
+                    text-align: center;
+
+                    .movie-info {
+                        font-size: 0.8rem;
+                        line-height: 1.2;
+                    }
+                }
+            }
+
+            .order-content {
+                width: 95vw;
+                margin: 1.5rem auto;
+                padding: 1.5rem 1rem;
+
+                h2 {
+                    font-size: 1.2rem;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                }
+
+                .fee {
+                    font-size: 0.85rem;
+                }
+
+                .order-form {
+                    input {
+                        font-size: 0.9rem;
+                    }
+
+                    .accept {
+                        font-size: 0.75rem;
+                        line-height: 1.4;
+                    }
+
+                    .pay-button {
+                        font-size: 0.85rem;
+                        padding: 0.7rem;
+                    }
+
+                    .back-button {
+                        font-size: 0.9rem;
+                        padding: 0.6rem;
+                    }
+                }
+            }
+
+            .payment-methods {
+                gap: 0.4rem;
+            }
+
+            .payment-dialog {
+                .dialog-content {
+                    font-size: 1rem;
+                    padding: 1rem;
+                }
+
+                .loader {
+                    width: 24px;
+                    height: 24px;
+                    border-width: 3px;
+                }
+            }
+        }
+    }
 }
