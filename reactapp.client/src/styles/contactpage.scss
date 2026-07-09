@@ -24,7 +24,7 @@
             color: black;
 
             &:hover {
-                background-color: darken(#F5821E, 10%);
+                background-color: #dd7419;
             }
 
             &.btn-knowledge {
@@ -94,7 +94,7 @@
             }
 
             &:hover {
-                background-color: darken(#F5821E, 10%);
+                background-color: #dd7419;
             }
         }
     }
@@ -142,7 +142,7 @@
             border: none;
 
             &:hover {
-                background-color: darken(#F5821E, 10%);
+                background-color: #dd7419;
             }
         }
     }
@@ -159,7 +159,7 @@
     text-decoration: none;
 
     &:hover {
-        background-color: darken(#F5821E, 10%);
+        background-color: #dd7419;
         text-decoration: none;
     }
 }

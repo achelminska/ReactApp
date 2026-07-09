@@ -1,7 +1,5 @@
 import AppNavbar from './AppNavbar';
 import Footer from './Footer';
-import { useState } from 'react';
-import { Button, Offcanvas, Form } from 'react-bootstrap';
 import ScrollToTopDesktop from './ScrollToTopDesktop';
 import BuyTicketButton from './BuyTicketButton';
 

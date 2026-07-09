@@ -1,18 +1,31 @@
-﻿import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+﻿import { useState } from 'react';
+import { Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginFormComponent({ onSuccess }) {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+    const [error, setError] = useState('');
+    const [submitting, setSubmitting] = useState(false);
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('loguję', { email, pass });
-        if (onSuccess) onSuccess();
+        setError('');
+        setSubmitting(true);
+        try {
+            await login(email, pass);
+            if (onSuccess) onSuccess();
+        } catch (err) {
+            setError(err.message || 'Nie udało się zalogować.');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
         <Form onSubmit={handleSubmit}>
+            {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group controlId="loginEmail" className="mb-3">
                 <Form.Label>E-mail</Form.Label>
                 <Form.Control
@@ -33,8 +46,8 @@ export default function LoginFormComponent({ onSuccess }) {
                     required
                 />
             </Form.Group>
-            <Button variant="primary" type="submit" className="login-btn">
-                Zaloguj
+            <Button variant="primary" type="submit" className="login-btn" disabled={submitting}>
+                {submitting ? <Spinner size="sm" animation="border" /> : 'Zaloguj'}
             </Button>
         </Form>
     );

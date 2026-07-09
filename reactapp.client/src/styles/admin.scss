@@ -1,0 +1,361 @@
+.admin-login-page {
+    min-height: 100vh;
+    background: #0d0d0d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.admin-login-card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    color: #fff;
+
+    h1 {
+        font-size: 1.5rem;
+        color: #f5821e;
+        margin: 1rem 0 0.5rem;
+        text-align: center;
+    }
+}
+
+.admin-login-logo {
+    display: block;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.admin-login-hint {
+    color: #888;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.admin-login-back {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #888;
+    text-decoration: none;
+
+    &:hover {
+        color: #f5821e;
+    }
+}
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #0d0d0d;
+    color: #fff;
+}
+
+.admin-sidebar {
+    width: 260px;
+    background: #111;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+
+    img {
+        height: 40px;
+    }
+
+    span {
+        font-weight: 700;
+        color: #f5821e;
+    }
+}
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+
+    a {
+        color: #ccc;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        &.active {
+            background: #f5821e;
+            color: #000;
+            font-weight: 600;
+        }
+    }
+}
+
+.admin-sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+
+    small {
+        color: #888;
+        word-break: break-all;
+    }
+
+    button {
+        background: #f5821e;
+        border: none;
+        color: #000;
+        padding: 0.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+
+        &.secondary {
+            background: transparent;
+            border: 1px solid #555;
+            color: #ccc;
+        }
+    }
+}
+
+.admin-main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 2rem;
+}
+
+.admin-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #0d0d0d;
+}
+
+.admin-page h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #f5821e;
+}
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-stat-card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1.25rem;
+
+    .label {
+        color: #888;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f5821e;
+    }
+}
+
+.admin-table-wrap {
+    overflow-x: auto;
+    background: #1a1a1a;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #333;
+    }
+
+    th {
+        background: #222;
+        color: #f5821e;
+        font-weight: 600;
+    }
+
+    tr:hover td {
+        background: #222;
+    }
+}
+
+.admin-form {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-width: 600px;
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: #ccc;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        background: #111;
+        border: 1px solid #444;
+        color: #fff;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+    }
+
+    .checkbox-row {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+}
+
+.admin-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    button {
+        background: #f5821e;
+        border: none;
+        color: #000;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-weight: 600;
+
+        &.danger {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        &.secondary {
+            background: #444;
+            color: #fff;
+        }
+    }
+}
+
+.admin-filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+
+    input, select {
+        background: #1a1a1a;
+        border: 1px solid #444;
+        color: #fff;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+    }
+}
+
+.admin-chart {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+
+    h3 {
+        color: #f5821e;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .bar-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+
+        .date {
+            width: 90px;
+            color: #888;
+        }
+
+        .bar {
+            flex: 1;
+            height: 20px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+
+            .fill {
+                height: 100%;
+                background: #f5821e;
+                border-radius: 4px;
+            }
+        }
+
+        .count {
+            width: 30px;
+            text-align: right;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .admin-layout {
+        flex-direction: column;
+    }
+}

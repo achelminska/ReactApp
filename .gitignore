@@ -359,5 +359,9 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Fody - auto-generated XML schema
+
+# CinemaBox local database
+cinemabox.db
+cinemabox.db-shm
+cinemabox.db-wal
 FodyWeavers.xsd

@@ -1,30 +1,21 @@
 ﻿import { Container, Row, Col, Button } from 'react-bootstrap';
 import Select from 'react-select';
-import { useState } from 'react';
-import { cities } from '../data/cities';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { cinemasApi } from '../api';
 
-const options = cities.map(c => ({ value: c, label: c }));
 const customStyles = {
     control: (base) => ({
         ...base,
         background: 'black',
         borderColor: '#F5821E',
         color: '#fff',
-        boxShadow: 'none',          
-        outline: 'none',             
-        '&:hover': {
-            borderColor: '#F5821E',    
-        },
+        boxShadow: 'none',
+        outline: 'none',
+        '&:hover': { borderColor: '#F5821E' },
     }),
-    menu: (base) => ({
-        ...base,
-        margin: 0,        
-    }),
-    menuList: (base) => ({
-        ...base,
-        margin: 0,          
-        padding: 0,         
-    }),
+    menu: (base) => ({ ...base, margin: 0 }),
+    menuList: (base) => ({ ...base, margin: 0, padding: 0 }),
     option: (base, state) => ({
         ...base,
         backgroundColor: state.isFocused ? '#F5821E' : '#121212',
@@ -34,12 +25,27 @@ const customStyles = {
 };
 
 export default function SearchSection() {
-    const [city, setCity] = useState(cities[0]);
+    const [cities, setCities] = useState([]);
+    const [city, setCity] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        cinemasApi.cities()
+            .then(list => {
+                setCities(list);
+                if (list.length > 0) setCity(list[0]);
+            })
+            .catch(() => {});
+    }, []);
+
+    const options = cities.map(c => ({ value: c, label: c }));
+
     const handleShow = () => {
-        console.log('Pokaż repertuar dla', city);
+        if (city) navigate('/repertuar', { state: { selectedCity: city } });
     };
+
     return (
-       <Container fluid className = "search-section py-4" >
+        <Container fluid className="search-section py-4">
             <Row className="justify-content-end justify-content-md-center">
                 <Col xs={12} md={8} lg={6} xl={5}>
                     <div className="search-box d-flex flex-column flex-md-row align-items-start align-items-md-center">
@@ -52,7 +58,7 @@ export default function SearchSection() {
                                     styles={customStyles}
                                     options={options}
                                     value={options.find(o => o.value === city)}
-                                    onChange={o => setCity(o.value)}
+                                    onChange={o => setCity(o?.value || '')}
                                 />
                             </div>
                             <Button variant="outline-light" onClick={handleShow}>
@@ -62,6 +68,6 @@ export default function SearchSection() {
                     </div>
                 </Col>
             </Row>
-</Container >
-  );
+        </Container>
+    );
 }
