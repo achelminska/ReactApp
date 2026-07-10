@@ -17,6 +17,11 @@ export const moviesApi = {
         return apiFetch(`/api/movies${qs ? `?${qs}` : ''}`);
     },
     get: (id) => apiFetch(`/api/movies/${id}`),
+    showtimes: (id, city, date) => {
+        const params = new URLSearchParams({ city });
+        if (date) params.set('date', date);
+        return apiFetch(`/api/movies/${id}/showtimes?${params}`);
+    },
 };
 
 export const cinemasApi = {

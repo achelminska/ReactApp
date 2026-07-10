@@ -3,7 +3,15 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background-color: $dark-bg;
+    font-family: $font-main;
+    -webkit-font-smoothing: antialiased;
+    color: #fff;
+}
+
+::selection {
+    background: $primary;
+    color: #000;
 }
 
 h5 {
@@ -24,6 +32,51 @@ h5 {
     padding-top: 84px;
 
     @media (min-width: 992px) {
-        padding-top: 134px;
+        padding-top: 114px;
+    }
+}
+
+// Nagłówki sekcji na stronie głównej
+.screen-section h5 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 0.6rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 48px;
+        height: 3px;
+        border-radius: 3px;
+        background: linear-gradient(90deg, $primary, $primary-hover);
+    }
+}
+
+// Cienki, ciemny scrollbar w całej aplikacji
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+
+    &:hover {
+        background: #555;
     }
 }

@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/repertuar.scss';
 import CarouselBanner from '../components/CarouselBanner';
 import { showtimesApi } from '../api';
@@ -86,9 +86,11 @@ export default function RepertuarPage() {
                         <p style={{ color: 'white' }}>Ładowanie repertuaru...</p>
                     ) : filteredMovies.length > 0 ? filteredMovies.map(movie => (
                         <div className="movie-item" key={movie.movieId}>
-                            <img src={movie.posterUrl} alt={movie.title} className="movie-poster" />
+                            <Link to={`/film/${movie.movieId}`}>
+                                <img src={movie.posterUrl} alt={movie.title} className="movie-poster" />
+                            </Link>
                             <div className="movie-info">
-                                <h4>{movie.title}</h4>
+                                <h4><Link to={`/film/${movie.movieId}`} style={{ color: 'inherit', textDecoration: 'none' }}>{movie.title}</Link></h4>
                                 <div className="tags">🎬 {movie.tags || '2D | PL (napisy)'}</div>
                                 <div className="showtimes">
                                     {movie.showtimes.map(st => (

@@ -64,7 +64,7 @@ export default function AppNavbar() {
                         <Navbar.Toggle aria-controls="offcanvasNavbar" />
                     </div>
 
-                    <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end" className="offcanvas-custom d-lg-none">
+                    <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end" className="offcanvas-custom d-lg-none" scroll backdrop>
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title><img src="/image/logo2.png" alt="CinemaBox" style={{ height: '60px' }} /></Offcanvas.Title>
                         </Offcanvas.Header>
@@ -77,7 +77,7 @@ export default function AppNavbar() {
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
 
-                    <Offcanvas show={showMobileUserOff} onHide={() => setShowMobileUserOff(false)} placement="end" className="offcanvas-custom user-offcanvas d-lg-none">
+                    <Offcanvas show={showMobileUserOff} onHide={() => setShowMobileUserOff(false)} placement="end" className="offcanvas-custom user-offcanvas d-lg-none" scroll backdrop>
                         <Offcanvas.Header closeButton />
                         {user ? (
                             <Offcanvas.Body>
@@ -100,26 +100,26 @@ export default function AppNavbar() {
                         )}
                     </Offcanvas>
 
-                    <Navbar.Collapse id="navbarNavDropdown" className="d-none d-lg-flex justify-content-center">
-                        <Nav className="align-items-center mx-auto">
-                            <Navbar.Brand as={Link} to="/" className="d-none d-lg-block me-4">
-                                <img src="/image/logo2.png" alt="CinemaBox" style={{ height: '60px' }} className="d-inline-block align-top" />
-                            </Navbar.Brand>
-                            <div className="city-selector position-relative">
-                                <div className="linksMenuDesktop city-selector" role="button" onClick={() => setShowCityDropdown(!showCityDropdown)}>
-                                    <i className="bi bi-geo-alt-fill me-2" style={{ fontSize: '1rem' }}></i>
-                                    {selectedCity || 'Wybierz miasto'}
-                                    <i className="bi bi-chevron-down ms-2" />
-                                </div>
-                                {showCityDropdown && (
-                                    <ul className="city-dropdown">
-                                        {cities.map(city => (
-                                            <li key={city} onClick={() => { setSelectedCity(city); setShowCityDropdown(false); }}>{city}</li>
-                                        ))}
-                                    </ul>
-                                )}
+                    <Navbar.Collapse id="navbarNavDropdown" className="d-none d-lg-flex align-items-center">
+                        <Navbar.Brand as={Link} to="/" className="me-4 py-0">
+                            <img src="/image/logo2.png" alt="CinemaBox" className="navbar-logo d-inline-block align-middle" />
+                        </Navbar.Brand>
+                        <div className="city-selector position-relative">
+                            <div className="city-selector-trigger" role="button" onClick={() => setShowCityDropdown(!showCityDropdown)}>
+                                <i className="bi bi-geo-alt-fill me-2"></i>
+                                {selectedCity || 'Wybierz miasto'}
+                                <i className="bi bi-chevron-down ms-2" />
                             </div>
-                            <div className="vertical-divider d-none d-lg-block"></div>
+                            {showCityDropdown && (
+                                <ul className="city-dropdown">
+                                    {cities.map(city => (
+                                        <li key={city} onClick={() => { setSelectedCity(city); setShowCityDropdown(false); }}>{city}</li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                        <Nav className="align-items-center ms-auto gap-2">
+                            <SearchInput onSearch={handleSearch} />
                             {user ? (
                                 <>
                                     <Nav.Link className="linksMenuDesktop text-truncate" style={{ maxWidth: 180 }} title={user.email}>
@@ -128,21 +128,27 @@ export default function AppNavbar() {
                                     {isAdmin && (
                                         <Nav.Link as={Link} to="/admin" className="linksMenuDesktop text-warning">Admin</Nav.Link>
                                     )}
-                                    <Nav.Link className="linksMenuDesktop" role="button" onClick={logout}>Wyloguj</Nav.Link>
+                                    <button className="btn-navbar-cta" onClick={logout}>Wyloguj</button>
                                 </>
                             ) : (
                                 <>
                                     <Nav.Link className="linksMenuDesktop" role="button" onClick={() => setShowLoginOff(true)}>
-                                        <i className="bi bi-person me-2"></i>Logowanie
+                                        Logowanie
                                     </Nav.Link>
-                                    <div className="vertical-divider d-none d-lg-block"></div>
-                                    <Nav.Link className="linksMenuDesktop" role="button" onClick={() => setShowRegisterOff(true)}>Rejestracja</Nav.Link>
+                                    <button className="btn-navbar-cta" onClick={() => setShowRegisterOff(true)}>Załóż konto</button>
                                 </>
                             )}
-                            <SearchInput onSearch={handleSearch} />
                         </Nav>
-                        <LoginOffcanvas show={showLoginOff} onHide={() => setShowLoginOff(false)} />
-                        <RegisterOffcanvas show={showRegisterOff} onHide={() => setShowRegisterOff(false)} />
+                        <LoginOffcanvas
+                            show={showLoginOff}
+                            onHide={() => setShowLoginOff(false)}
+                            onSwitchToRegister={() => { setShowLoginOff(false); setShowRegisterOff(true); }}
+                        />
+                        <RegisterOffcanvas
+                            show={showRegisterOff}
+                            onHide={() => setShowRegisterOff(false)}
+                            onSwitchToLogin={() => { setShowRegisterOff(false); setShowLoginOff(true); }}
+                        />
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

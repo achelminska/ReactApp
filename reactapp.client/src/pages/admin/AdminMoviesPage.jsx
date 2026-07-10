@@ -6,6 +6,7 @@ const emptyForm = {
     description: '',
     posterUrl: '/image/logo2.png',
     durationMinutes: 120,
+    genre: '',
     tags: '2D | PL (napisy)',
     isCurrentlyShowing: true,
     isUpcoming: false,
@@ -49,6 +50,7 @@ export default function AdminMoviesPage() {
             description: movie.description || '',
             posterUrl: movie.posterUrl,
             durationMinutes: movie.durationMinutes,
+            genre: movie.genre || '',
             tags: movie.tags,
             isCurrentlyShowing: movie.isCurrentlyShowing,
             isUpcoming: movie.isUpcoming,
@@ -88,6 +90,10 @@ export default function AdminMoviesPage() {
                 <div className="form-group">
                     <label>Czas trwania (min)</label>
                     <input type="number" value={form.durationMinutes} onChange={e => setForm({ ...form, durationMinutes: +e.target.value })} />
+                </div>
+                <div className="form-group">
+                    <label>Gatunek</label>
+                    <input value={form.genre} onChange={e => setForm({ ...form, genre: e.target.value })} placeholder="np. Dramat / Komedia" />
                 </div>
                 <div className="form-group">
                     <label>Tagi</label>

@@ -1,6 +1,24 @@
+// === CinemaBox design tokens ===
 $primary: #F5821E;
+$primary-hover: #ff9a3d;
+$primary-dark: #d96e0f;
 $black: #000;
-$dark-bg: #121212;
+$dark-bg: #0a0a0a;
+$surface: #141414;
+$surface-2: #1d1d1d;
+$border-subtle: rgba(255, 255, 255, 0.08);
+$border-accent: rgba(245, 130, 30, 0.35);
+$text-muted: #9a9a9a;
+
+$font-main: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 18px;
+
+$shadow-card: 0 8px 24px rgba(0, 0, 0, 0.55);
+$shadow-glow: 0 0 24px rgba(245, 130, 30, 0.35);
+
 $z-navbar-top: 1050;
 $z-navbar-bot: 1040;
 $z-scroll-btn: 1100;

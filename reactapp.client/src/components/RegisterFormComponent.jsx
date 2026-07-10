@@ -1,12 +1,14 @@
 ﻿import { useState } from 'react';
-import { Form, Button, Alert, Spinner, Col, Row } from 'react-bootstrap';
+import { Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
+import '../styles/auth.scss';
 
 export default function RegisterFormComponent({ onSuccess }) {
     const { register } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [confirm, setConfirm] = useState('');
+    const [showPass, setShowPass] = useState(false);
     const [city, setCity] = useState('');
     const [accepted, setAccepted] = useState(false);
     const [error, setError] = useState('');
@@ -32,50 +34,70 @@ export default function RegisterFormComponent({ onSuccess }) {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form className="auth-form" onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group className="mb-3" controlId="registerEmail">
                 <Form.Label>E-mail</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Wpisz e-mail"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                />
+                <div className="input-icon-group">
+                    <Form.Control
+                        type="email"
+                        placeholder="twoj@email.pl"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                    <i className="bi bi-envelope field-icon"></i>
+                </div>
             </Form.Group>
 
-            <Row className="mb-3">
-                <Form.Group as={Col} controlId="registerPassword">
-                    <Form.Label>Hasło</Form.Label>
+            <Form.Group className="mb-3" controlId="registerPassword">
+                <Form.Label>Hasło</Form.Label>
+                <div className="input-icon-group">
                     <Form.Control
-                        type="password"
+                        type={showPass ? 'text' : 'password'}
+                        className="has-toggle"
                         placeholder="Min. 6 znaków"
                         value={pass}
                         onChange={e => setPass(e.target.value)}
                         minLength={6}
                         required
                     />
-                </Form.Group>
-                <Form.Group as={Col} controlId="registerConfirm">
-                    <Form.Label>Powtórz hasło</Form.Label>
+                    <i className="bi bi-lock field-icon"></i>
+                    <button
+                        type="button"
+                        className="toggle-password"
+                        aria-label={showPass ? 'Ukryj hasło' : 'Pokaż hasło'}
+                        onClick={() => setShowPass(v => !v)}
+                    >
+                        <i className={showPass ? 'bi bi-eye-slash' : 'bi bi-eye'}></i>
+                    </button>
+                </div>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="registerConfirm">
+                <Form.Label>Powtórz hasło</Form.Label>
+                <div className="input-icon-group">
                     <Form.Control
-                        type="password"
+                        type={showPass ? 'text' : 'password'}
                         placeholder="Powtórz hasło"
                         value={confirm}
                         onChange={e => setConfirm(e.target.value)}
                         required
                     />
-                </Form.Group>
-            </Row>
+                    <i className="bi bi-shield-lock field-icon"></i>
+                </div>
+            </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerCity">
-                <Form.Label>Miasto (opcjonalnie)</Form.Label>
-                <Form.Control
-                    placeholder="Twoje miasto"
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
-                />
+                <Form.Label>Miasto <span className="text-lowercase" style={{ opacity: 0.6, textTransform: 'none' }}>(opcjonalnie)</span></Form.Label>
+                <div className="input-icon-group">
+                    <Form.Control
+                        placeholder="Twoje miasto"
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                    />
+                    <i className="bi bi-geo-alt field-icon"></i>
+                </div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerAccept">
@@ -93,8 +115,8 @@ export default function RegisterFormComponent({ onSuccess }) {
                 />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="login-btn" disabled={submitting}>
-                {submitting ? <Spinner size="sm" animation="border" /> : 'Zarejestruj się'}
+            <Button type="submit" className="auth-submit" disabled={submitting}>
+                {submitting ? <Spinner size="sm" animation="border" /> : 'Załóż konto'}
             </Button>
         </Form>
     );

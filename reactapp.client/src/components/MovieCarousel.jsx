@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import { moviesApi } from '../api';
 import { scrollByRef } from '../utils/scroll';
 
-export default function MovieCarousel({ title, category }) {
+export default function MovieCarousel({ title, category, excludeId }) {
     const rowRef = useRef(null);
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         moviesApi.list(category)
-            .then(setMovies)
+            .then(data => setMovies(excludeId ? data.filter(m => m.id !== excludeId) : data))
             .catch(() => setMovies([]))
             .finally(() => setLoading(false));
-    }, [category]);
+    }, [category, excludeId]);
 
     const items = movies.length > 0 ? [...movies, ...movies] : [];
 
@@ -46,7 +46,7 @@ export default function MovieCarousel({ title, category }) {
             >
                 {items.map((movie, idx) => (
                     <div key={`${movie.id}-${idx}`} className="movie-card text-center me-3">
-                        <Link to="/repertuar" className="p-0 text-decoration-none">
+                        <Link to={`/film/${movie.id}`} className="p-0 text-decoration-none">
                             <img src={movie.posterUrl} alt={movie.title} className="movie-img" />
                             <p className="movie-title text-white mt-2">{movie.title}</p>
                         </Link>

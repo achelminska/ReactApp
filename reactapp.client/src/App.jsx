@@ -13,6 +13,7 @@ import TicketSelectionPage from './pages/TicketSelectionPage';
 import OrderSummaryPage from './pages/OrderSummaryPage';
 import RepertuarPage from './pages/RepertuarPage';
 import SearchPage from './pages/SearchPage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminRoute from './components/admin/AdminRoute';
@@ -41,6 +42,7 @@ function App() {
                     }
                 />
                 <Route path="/repertuar" element={<Layout><RepertuarPage /></Layout>} />
+                <Route path="/film/:id" element={<Layout><MovieDetailsPage /></Layout>} />
                 <Route path="/szukaj" element={<Layout><SearchPage /></Layout>} />
                 <Route path="/kontakt" element={<ContactPage />} />
                 <Route path="/kontakt/formularz" element={<ContactFormPage />} />

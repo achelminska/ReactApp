@@ -1,5 +1,4 @@
-
-
+@import 'variables';
 
 .floating-zakup-btn {
     position: fixed;
@@ -10,22 +9,26 @@
 }
 
 .button-kupbilet {
-    background-color: #f5821e;
+    background: linear-gradient(135deg, $primary, $primary-dark);
     color: black;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    border: none;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 8px 28px rgba(245, 130, 30, 0.45);
 
     &:hover {
-        background-color: black;
-        border: 2px solid #f5821e;
-        color: #f5821e;
+        background: #0a0a0a;
+        border-color: $primary;
+        color: $primary;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(245, 130, 30, 0.35);
     }
 }
 
 .button-kupbilet.btn:active {
     transform: scale(0.96);
     background-color: black;
-    border: 2px solid #f5821e;
-    color: #f5821e;
+    border: 2px solid $primary;
+    color: $primary;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { moviesApi } from '../api';
 
 export default function SearchPage() {
@@ -26,9 +26,11 @@ export default function SearchPage() {
                     <div className="movies-list">
                         {movies.map(m => (
                             <div className="movie-item" key={m.id}>
-                                <img src={m.posterUrl} alt={m.title} className="movie-poster" />
+                                <Link to={`/film/${m.id}`}>
+                                    <img src={m.posterUrl} alt={m.title} className="movie-poster" />
+                                </Link>
                                 <div className="movie-info">
-                                    <h4>{m.title}</h4>
+                                    <h4><Link to={`/film/${m.id}`} style={{ color: 'inherit', textDecoration: 'none' }}>{m.title}</Link></h4>
                                     <div className="tags">🎬 {m.tags}</div>
                                     {m.description && <p style={{ color: '#ccc', fontSize: '0.9rem' }}>{m.description}</p>}
                                 </div>
