@@ -11,12 +11,14 @@
     align-items: center;
     justify-content: center;
     z-index: $z-scroll-btn;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    box-shadow: $shadow-glow;
     background-color: $primary;
     border: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 
     &:hover {
-        background-color: $primary;
+        background-color: $primary-hover;
+        transform: translateY(-2px);
     }
 
     .bi-arrow-up {
@@ -24,19 +26,35 @@
     }
 }
 
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg…stroke='%23F5821E'…%3E");
-}
-
 .firstNavbar {
+    background: rgba(5, 5, 5, 0.92) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid $border-subtle;
 
     &.fixed-top {
         top: 0;
         z-index: $z-navbar-top;
     }
 
+    @media (min-width: 992px) {
+        min-height: 68px;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .container-fluid {
+            max-width: 1320px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .navbar-collapse {
+            min-height: 68px;
+        }
+    }
+
     .navbar-toggler {
-        border: 2px solid #F5821E !important;
+        border: 2px solid $primary !important;
+        border-radius: $radius-sm;
     }
 
     .navbar-toggler-icon {
@@ -44,21 +62,38 @@
     }
 
     .icon-loginMobile i {
-        color: #F5821E !important;
+        color: $primary !important;
         font-size: 2.5rem;
     }
 }
 
+.navbar-logo {
+    height: 44px;
+    width: auto;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    @media (max-width: 991px) {
+        height: 54px;
+    }
+}
+
 .secondNavbarDesktop {
-    background-color: $primary;
+    background: rgba(8, 8, 8, 0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid $border-subtle;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 
     &.fixed-top {
-        top: 84px;
+        top: 68px;
         z-index: $z-navbar-bot;
         width: 100%;
     }
 
-    min-height: 50px;
+    min-height: 46px;
     padding: 0;
     align-items: stretch;
 
@@ -70,14 +105,44 @@
         display: flex;
         height: 100%;
         align-items: stretch;
+        gap: 0.5rem !important;
     }
 }
 
 .linksMenuDesktop {
+    color: #c9c9c9 !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    transition: color 0.2s ease;
+
     &:hover,
     &:focus,
     &:active {
-        color: $primary !important; 
+        color: $primary !important;
+    }
+}
+
+// Przycisk CTA w górnym pasku (Załóż konto / Wyloguj)
+.btn-navbar-cta {
+    background: transparent;
+    border: 1px solid rgba(245, 130, 30, 0.6);
+    color: $primary;
+    font-family: $font-main;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+
+    &:hover {
+        background: $primary;
+        border-color: $primary;
+        color: #000;
+        box-shadow: 0 4px 16px rgba(245, 130, 30, 0.35);
     }
 }
 
@@ -85,16 +150,39 @@
     display: flex;
     align-items: center;
     height: 100%;
-    color: black;
-    font-weight: bold;
-    padding: .5rem 1rem;
-    transition: background-color .3s;
+    color: #c9c9c9;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    padding: 0.75rem 1.15rem;
+    position: relative;
+    transition: color 0.25s ease;
+
+    // Animowane podkreślenie zamiast ciężkiego tła
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: calc(100% - 2.1rem);
+        height: 2px;
+        border-radius: 2px;
+        background: $primary;
+        transition: transform 0.25s ease;
+        transform-origin: center;
+    }
 
     &:hover,
     &:focus,
     &:active {
-        color: $primary !important; 
-        background-color: black;
+        color: $primary !important;
+        background-color: transparent;
+
+        &::after {
+            transform: translateX(-50%) scaleX(1);
+        }
     }
 }
 
@@ -114,7 +202,7 @@
 }
 
 .icon-scroll-top-mobile {
-    display: none; 
+    display: none;
     color: $primary;
     font-size: 2rem;
     margin-left: .75rem;
@@ -126,15 +214,14 @@
 }
 
 .vertical-divider {
-    border-left: 1px solid #808080;
-    height: 24px;
-    margin: 0 4px;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    height: 20px;
+    margin: 0 8px;
 }
 
+// Separatory w dolnym pasku usunięte — oddychająca przestrzeń zamiast kresek
 .vertical-divider2 {
-    border-left: 1px solid black;
-    height: 24px;
-    margin: 0 4px;
+    display: none;
 }
 
 .na-ekranie {
@@ -143,31 +230,65 @@
 }
 
 .city-selector {
-    color: #8C8C8C;
     display: flex;
     align-items: center;
-    cursor: pointer;
+
+    .city-selector-trigger {
+        display: flex;
+        align-items: center;
+        color: #c9c9c9;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0.45rem 1rem;
+        border: 1px solid $border-subtle;
+        border-radius: 50px;
+        transition: all 0.25s ease;
+
+        .bi-geo-alt-fill {
+            color: $primary;
+            font-size: 0.95rem;
+        }
+
+        .bi-chevron-down {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        &:hover {
+            color: #fff;
+            border-color: $border-accent;
+            background: rgba(245, 130, 30, 0.06);
+        }
+    }
 
     .city-dropdown {
         position: absolute;
-        top: 100%;
+        top: calc(100% + 8px);
         left: 0;
-        background: #000;
+        background: $surface;
         color: #fff;
         list-style: none;
-        padding: 0;
+        padding: 0.4rem 0;
         margin: 0;
         z-index: 999;
-        border: 1px solid #f5821e;
+        border: 1px solid $border-accent;
+        border-radius: $radius-md;
         width: max-content;
+        max-height: 340px;
+        overflow-y: auto;
+        box-shadow: $shadow-card;
 
         li {
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.25rem;
             cursor: pointer;
             white-space: nowrap;
+            transition: all 0.15s ease;
 
             &:hover {
-                background: #f5821e;
+                background: $primary;
+                color: #000;
+                font-weight: 600;
             }
         }
     }

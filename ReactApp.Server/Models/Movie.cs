@@ -7,6 +7,7 @@ public class Movie
     public string? Description { get; set; }
     public required string PosterUrl { get; set; }
     public int DurationMinutes { get; set; } = 120;
+    public string? Genre { get; set; }
     public string Tags { get; set; } = "2D | PL (napisy)";
     public bool IsCurrentlyShowing { get; set; }
     public bool IsUpcoming { get; set; }

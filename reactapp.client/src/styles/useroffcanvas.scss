@@ -25,21 +25,6 @@
         border: none;
     }
 
-    .login-btn {
-        display: block;
-        width: 50%;
-        margin: 2rem auto 0;
-        transition: transform .1s ease;
-
-        &:hover,
-        &:active {
-            transform: scale(0.96);
-            background-color: black !important;
-            border: 2px solid #f5821e !important;
-            color: #f5821e !important;
-        }
-    }
-
     .form-label,
     .form-check-label {
         color: rgba(255, 255, 255, 0.55) !important;

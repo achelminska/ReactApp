@@ -28,6 +28,7 @@ public class AdminMoviesController(CinemaDbContext db) : ControllerBase
             Description = request.Description,
             PosterUrl = request.PosterUrl,
             DurationMinutes = request.DurationMinutes > 0 ? request.DurationMinutes : 120,
+            Genre = request.Genre,
             Tags = string.IsNullOrWhiteSpace(request.Tags) ? "2D | PL (napisy)" : request.Tags,
             IsCurrentlyShowing = request.IsCurrentlyShowing,
             IsUpcoming = request.IsUpcoming,
@@ -48,6 +49,7 @@ public class AdminMoviesController(CinemaDbContext db) : ControllerBase
         movie.Description = request.Description;
         movie.PosterUrl = request.PosterUrl;
         movie.DurationMinutes = request.DurationMinutes > 0 ? request.DurationMinutes : movie.DurationMinutes;
+        movie.Genre = request.Genre;
         movie.Tags = string.IsNullOrWhiteSpace(request.Tags) ? movie.Tags : request.Tags;
         movie.IsCurrentlyShowing = request.IsCurrentlyShowing;
         movie.IsUpcoming = request.IsUpcoming;

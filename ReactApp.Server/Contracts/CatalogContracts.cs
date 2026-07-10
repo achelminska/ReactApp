@@ -8,6 +8,7 @@ public record MovieDto(
     string? Description,
     string PosterUrl,
     int DurationMinutes,
+    string? Genre,
     string Tags,
     bool IsCurrentlyShowing,
     bool IsUpcoming,
@@ -18,6 +19,7 @@ public record MovieUpsertRequest(
     string? Description,
     [Required] string PosterUrl,
     int DurationMinutes,
+    string? Genre,
     string Tags,
     bool IsCurrentlyShowing,
     bool IsUpcoming,
@@ -42,6 +44,8 @@ public record RepertoireMovieDto(
     IEnumerable<RepertoireShowtimeDto> Showtimes);
 
 public record RepertoireShowtimeDto(int ShowtimeId, string Time);
+
+public record MovieShowtimeDto(int ShowtimeId, string Time, string HallName);
 
 public record ShowtimeDetailsDto(
     int Id,

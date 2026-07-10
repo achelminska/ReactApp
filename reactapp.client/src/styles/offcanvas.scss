@@ -19,10 +19,11 @@
 }
 
 .offcanvas-custom {
-    background-color: black;
+    background-color: #0d0d0d;
     color: $primary;
     font-weight: bold;
     z-index: 1100;
+    border-left: 1px solid $border-subtle;
 
     .btn-close {
         filter: none;
@@ -37,14 +38,29 @@
     }
 
     .form-control, .form-select {
-        background-color: #222;
-        border: 1px solid #444;
+        background-color: $surface-2;
+        border: 1px solid #3a3a3a;
+        border-radius: $radius-sm;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+            border-color: $primary;
+            box-shadow: none;
+        }
     }
 
     .btn-primary {
-        background-color: $primary;
-        border-color: $primary;
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        border: none;
         color: black;
+        font-weight: 700;
+        border-radius: $radius-sm;
+        transition: all 0.25s ease;
+
+        &:hover {
+            box-shadow: 0 6px 18px rgba(245, 130, 30, 0.4);
+            transform: translateY(-1px);
+        }
     }
 
     .btn-outline-secondary {

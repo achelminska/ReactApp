@@ -70,8 +70,24 @@ public static class DbSeeder
                 IsCurrentlyShowing = m.Now,
                 IsUpcoming = m.Upcoming,
                 IsFamilyFriendly = m.Family,
-                Description = $"Zapraszamy na seans filmu \"{m.Title}\" w kinach CinemaBox."
+                Genre = m.Genre,
+                DurationMinutes = m.Duration,
+                Description = m.Description
             }));
+        }
+        else
+        {
+            // Uzupełnij szczegóły (gatunek, opis, czas trwania) w istniejących bazach sprzed rozszerzenia modelu.
+            var seedByTitle = SeedData.Movies.ToDictionary(m => m.Title);
+            var moviesMissingDetails = await db.Movies.Where(m => m.Genre == null).ToListAsync();
+            foreach (var movie in moviesMissingDetails)
+            {
+                if (!seedByTitle.TryGetValue(movie.Title, out var seed)) continue;
+                movie.Genre = seed.Genre;
+                movie.DurationMinutes = seed.Duration;
+                if (string.IsNullOrWhiteSpace(movie.Description) || movie.Description.StartsWith("Zapraszamy na seans"))
+                    movie.Description = seed.Description;
+            }
         }
 
         if (!await db.Cinemas.AnyAsync())
