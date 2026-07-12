@@ -73,6 +73,44 @@ ReactApp/
     └── src/components/  # Komponenty UI
 ```
 
+## Deployment (Render.com)
+
+Projekt zawiera `Dockerfile` (multi-stage: build frontendu → publish backendu → obraz produkcyjny) oraz blueprint `render.yaml`.
+
+**Opcja A — blueprint:** w dashboardzie Rendera wybierz *New → Blueprint* i wskaż repozytorium. Render utworzy usługę z dyskiem i zmiennymi środowiskowymi z `render.yaml`; uzupełnij tylko `Seed__AdminEmail` i `Seed__AdminPassword`.
+
+**Opcja B — ręcznie:** *New → Web Service*, runtime **Docker**, dysk zamontowany w `/var/data` i zmienne środowiskowe:
+
+| Zmienna | Wartość |
+|---------|---------|
+| `ConnectionStrings__Default` | `Data Source=/var/data/cinemabox.db` |
+| `UPLOADS_PATH` | `/var/data/uploads` |
+| `Jwt__Key` | długi losowy ciąg (min. 32 znaki) |
+| `Seed__AdminEmail` | e-mail konta administratora |
+| `Seed__AdminPassword` | hasło konta administratora |
+
+Baza i wgrane plakaty żyją na trwałym dysku, więc przetrwają kolejne deploye. HTTPS wymusza proxy Rendera (aplikacja czyta nagłówki `X-Forwarded-*`).
+
+### Dane startowe
+
+Obraz zawiera snapshot lokalnej bazy (`deploy/seed/cinemabox.db`) i plakatów (`deploy/seed/uploads/`). Przy pierwszym starcie na pustym dysku entrypoint kopiuje je na `/var/data` — produkcja rusza z dokładnie tymi samymi filmami, opisami i kontami co lokalnie. Kolejne deploye **nie nadpisują** danych produkcyjnych.
+
+Aby odświeżyć snapshot przed deployem:
+
+```bash
+rm -f deploy/seed/cinemabox.db
+sqlite3 ReactApp.Server/cinemabox.db "VACUUM INTO 'deploy/seed/cinemabox.db'"
+cp -R ReactApp.Server/wwwroot/uploads/ deploy/seed/uploads/ 2>/dev/null || true
+```
+
+Test obrazu lokalnie:
+
+```bash
+docker build -t cinemabox .
+docker run -p 8080:8080 -e Jwt__Key="dowolny-dlugi-sekret" \
+  -e Seed__AdminEmail="admin@cinemabox.pl" -e Seed__AdminPassword="Admin123!" cinemabox
+```
+
 ## Uwagi
 
 - Płatności są **symulowane** — to wersja demonstracyjna

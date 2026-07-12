@@ -107,11 +107,13 @@ public class BookingsController(CinemaDbContext db) : ControllerBase
 
     internal static BookingDto ToDto(Booking b, Showtime showtime) => new(
         b.Id, b.CreatedAt, b.Status.ToString(),
+        showtime.Movie.Id,
         showtime.Movie.Title,
+        showtime.Movie.PosterUrl,
         showtime.Hall.Cinema.City,
         showtime.Hall.Name,
         showtime.StartsAt,
-        b.CustomerName, b.CustomerSurname, b.CustomerEmail,
+        b.CustomerName, b.CustomerSurname, b.CustomerEmail, b.CustomerPhone,
         b.TotalPrice, b.ServiceFee, b.PaymentMethod,
         b.Seats.Select(s => new BookingSeatDto(
             s.Row, s.SeatNumber, s.TicketType?.Name ?? "", s.Price)));

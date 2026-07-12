@@ -1,7 +1,9 @@
 ﻿import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer';
+import { useTranslation, Trans } from 'react-i18next';
+import BookingHeader from '../components/BookingHeader';
 import { bookingsApi } from '../api';
+import { useAuth } from '../context/AuthContext';
 import '../styles/orderSummary.scss';
 
 function parseSeat(seatId) {
@@ -10,6 +12,7 @@ function parseSeat(seatId) {
 }
 
 export default function OrderSummaryPage() {
+    const { t } = useTranslation();
     const { state } = useLocation();
     const navigate = useNavigate();
     const { showtimeId, film, kino, data, godzina, selectedSeats, seatTickets, ticketTypes } = state || {};
@@ -27,6 +30,48 @@ export default function OrderSummaryPage() {
     const [showDialog, setShowDialog] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
+
+    // Opcjonalne autouzupełnianie danych dla zalogowanych
+    const { user } = useAuth();
+    const [autofill, setAutofill] = useState(false);
+    const [profileData, setProfileData] = useState(null);
+
+    const toggleAutofill = async () => {
+        if (autofill) {
+            setAutofill(false);
+            setFormData(prev => ({ ...prev, name: '', surname: '', email: '', confirmEmail: '', phone: '' }));
+            return;
+        }
+
+        let data = profileData;
+        if (!data) {
+            // E-mail z konta + imię/nazwisko/telefon z ostatniej rezerwacji (jeśli jest)
+            data = { name: '', surname: '', phone: '', email: user.email };
+            try {
+                const myBookings = await bookingsApi.my();
+                const last = myBookings[0];
+                if (last) {
+                    data = {
+                        name: last.customerName || '',
+                        surname: last.customerSurname || '',
+                        phone: last.customerPhone || '',
+                        email: user.email,
+                    };
+                }
+            } catch { /* brak historii — użyjemy samego e-maila */ }
+            setProfileData(data);
+        }
+
+        setFormData(prev => ({
+            ...prev,
+            name: data.name,
+            surname: data.surname,
+            email: data.email,
+            confirmEmail: data.email,
+            phone: data.phone,
+        }));
+        setAutofill(true);
+    };
 
     useEffect(() => {
         const { name, surname, email, confirmEmail, accepted } = formData;
@@ -65,7 +110,7 @@ export default function OrderSummaryPage() {
             }, 2000);
         } catch (err) {
             setShowDialog(false);
-            setError(err.message || 'Nie udało się złożyć rezerwacji.');
+            setError(err.message || t('booking.bookingFailed'));
         }
     };
 
@@ -73,13 +118,16 @@ export default function OrderSummaryPage() {
         return (
             <div className="order-page">
                 <div className="order-content text-center">
-                    <h2>Rezerwacja potwierdzona!</h2>
-                    <p>Twoje bilety na <strong>{film}</strong> ({kino}, {godzina}) zostały zarezerwowane.</p>
-                    <p className="text-muted">Płatność jest symulowana — to wersja demonstracyjna serwisu.</p>
-                    <p>Potwierdzenie wysłano na: <strong>{formData.email}</strong></p>
-                    <button className="back-button mt-3" onClick={() => navigate('/')}>Strona główna</button>
+                    <h2>{t('booking.confirmedTitle')}</h2>
+                    <p>
+                        <Trans i18nKey="booking.confirmedText" values={{ film, cinema: kino, time: godzina }}>
+                            Twoje bilety na <strong>{{ film }}</strong> zostały zarezerwowane.
+                        </Trans>
+                    </p>
+                    <p className="text-muted">{t('booking.confirmedDemo')}</p>
+                    <p>{t('booking.confirmationSentTo')} <strong>{formData.email}</strong></p>
+                    <button className="back-button mt-3" onClick={() => navigate('/')}>{t('common.home')}</button>
                 </div>
-                <Footer />
             </div>
         );
     }
@@ -89,46 +137,47 @@ export default function OrderSummaryPage() {
             {showDialog && (
                 <div className="payment-dialog">
                     <div className="dialog-content">
-                        <p>Przetwarzanie płatności (symulacja)...</p>
+                        <p>{t('booking.processing')}</p>
                         <div className="loader"></div>
                     </div>
                 </div>
             )}
 
-            <div className="booking-header">
-                <div className="top-header">
-                    <div className="logo-container"><img src="/image/logo2.png" alt="Logo" /></div>
-                    <div className="top-bar">
-                        <div className="step">1<br />Wybór miejsc</div>
-                        <div className="step">2<br />Wybór biletów</div>
-                        <div className="step active">3<br />Zamówienie</div>
-                    </div>
-                </div>
-                <div className="movie-bar">
-                    <div className="movie-info">
-                        <strong>{film}</strong> – {kino} | {data} | {godzina}
-                    </div>
-                </div>
-            </div>
+            <BookingHeader step={3} showtimeId={showtimeId} />
 
             <div className="order-content">
-                <h2>ZAMÓWIENIE</h2>
+                <h2>{t('booking.order')}</h2>
                 {error && <p className="text-danger">{error}</p>}
-                <p><strong>Liczba biletów:</strong> {seatTickets?.length || 0}</p>
-                <p className="fee">w tym opłata serwisowa: {serviceFee.toFixed(2)} zł</p>
-                <p><strong>Razem:</strong> {totalWithFee.toFixed(2)} zł</p>
-                <p className="text-muted" style={{ fontSize: '0.85rem' }}>Płatność jest symulowana — wersja demonstracyjna.</p>
+                <p><strong>{t('booking.ticketCountLabel')}</strong> {seatTickets?.length || 0}</p>
+                <p className="fee">{t('booking.serviceFeeLine', { amount: serviceFee.toFixed(2) })}</p>
+                <p><strong>{t('booking.total')}</strong> {totalWithFee.toFixed(2)} zł</p>
+                <p className="text-muted" style={{ fontSize: '0.85rem' }}>{t('booking.demoNote')}</p>
 
                 <form className="order-form" onSubmit={e => e.preventDefault()}>
-                    <input name="name" value={formData.name} onChange={handleChange} placeholder="Imię" required />
-                    <input name="surname" value={formData.surname} onChange={handleChange} placeholder="Nazwisko" required />
-                    <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="E-Mail" required />
-                    <input name="confirmEmail" type="email" value={formData.confirmEmail} onChange={handleChange} placeholder="Potwierdź e-mail" required />
-                    <input name="phone" value={formData.phone} onChange={handleChange} placeholder="Numer telefonu (opcjonalnie)" />
+                    {user && (
+                        <button
+                            type="button"
+                            className={`autofill-toggle ${autofill ? 'on' : ''}`}
+                            onClick={toggleAutofill}
+                            aria-pressed={autofill}
+                        >
+                            <span className="autofill-switch" aria-hidden="true"></span>
+                            <span className="autofill-text">
+                                <strong>{t('booking.autofillLabel')}</strong>
+                                <small>{t('booking.autofillHint', { email: user.email })}</small>
+                            </span>
+                            <i className={`bi ${autofill ? 'bi-check-circle-fill' : 'bi-person-vcard'}`}></i>
+                        </button>
+                    )}
+                    <input name="name" value={formData.name} onChange={handleChange} placeholder={t('booking.name')} required />
+                    <input name="surname" value={formData.surname} onChange={handleChange} placeholder={t('booking.surname')} required />
+                    <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder={t('auth.email')} required />
+                    <input name="confirmEmail" type="email" value={formData.confirmEmail} onChange={handleChange} placeholder={t('booking.confirmEmail')} required />
+                    <input name="phone" value={formData.phone} onChange={handleChange} placeholder={t('booking.phoneOptional')} />
 
                     <label className="accept">
                         <input type="checkbox" name="accepted" checked={formData.accepted} onChange={handleChange} required />
-                        Przeczytałam(em) i akceptuję regulamin zakupu oraz politykę prywatności CinemaBox.
+                        {t('booking.acceptPurchase')}
                     </label>
 
                     <div className="payment-methods">
@@ -140,14 +189,13 @@ export default function OrderSummaryPage() {
                                 onClick={() => handlePaymentSelect(method)}
                                 disabled={!formValid}
                             >
-                                {method === 'karta' ? 'użyj karty kredytowej/płatniczej' : method}
+                                {method === 'karta' ? t('booking.payCard') : method}
                             </button>
                         ))}
                     </div>
-                    <button type="button" className="back-button" onClick={() => navigate(-1)}>WRÓĆ</button>
+                    <button type="button" className="back-button" onClick={() => navigate(-1)}>{t('booking.backUpper')}</button>
                 </form>
             </div>
-            <Footer />
         </div>
     );
 }

@@ -260,6 +260,14 @@
         display: flex;
         gap: 0.5rem;
         flex-wrap: wrap;
+
+        // Wszystkie dni w jednym rzędzie, bez zawijania
+        @media (max-width: 767px) {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.35rem;
+            width: 100%;
+        }
     }
 
     .day-pill {
@@ -276,14 +284,27 @@
         cursor: pointer;
         transition: all 0.2s ease;
 
+        @media (max-width: 767px) {
+            min-width: 0;
+            padding: 0.45rem 0.2rem;
+        }
+
         .day-name {
             font-size: 0.82rem;
             font-weight: 700;
+
+            @media (max-width: 767px) {
+                font-size: 0.74rem;
+            }
         }
 
         .day-date {
             font-size: 0.72rem;
             opacity: 0.65;
+
+            @media (max-width: 767px) {
+                font-size: 0.64rem;
+            }
         }
 
         &:hover {

@@ -59,6 +59,17 @@ public class AdminMoviesController(CinemaDbContext db) : ControllerBase
         return Ok(MoviesController.ToDto(movie));
     }
 
+    [HttpPost("{id:int}/toggle-archive")]
+    public async Task<ActionResult> ToggleArchive(int id)
+    {
+        var movie = await db.Movies.FindAsync(id);
+        if (movie is null) return NotFound();
+
+        movie.IsArchived = !movie.IsArchived;
+        await db.SaveChangesAsync();
+        return Ok(new { isArchived = movie.IsArchived });
+    }
+
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteMovie(int id)
     {

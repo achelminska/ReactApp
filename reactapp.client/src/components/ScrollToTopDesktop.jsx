@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function ScrollToTopDesktop() {
+    const { t } = useTranslation();
     const [showButton, setShowButton] = useState(false);
 
     useEffect(() => {
@@ -16,17 +18,15 @@ export default function ScrollToTopDesktop() {
     };
 
     return (
-        <>
-            {showButton && (
-                <div
-                    className="scroll-to-top-desktop"
-                    onClick={scrollToTop}
-                    title="Do góry"
-                    role="button"
-                >
-                    <i className="bi bi-arrow-up"></i>
-                </div>
-            )}
-        </>
+        <button
+            type="button"
+            className={`scroll-to-top-desktop ${showButton ? 'visible' : ''}`}
+            onClick={scrollToTop}
+            title={t('scroll.backToTop')}
+            aria-label={t('scroll.backToTop')}
+            tabIndex={showButton ? 0 : -1}
+        >
+            <i className="bi bi-arrow-up"></i>
+        </button>
     );
 }

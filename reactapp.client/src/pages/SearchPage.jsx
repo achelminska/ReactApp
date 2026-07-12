@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { moviesApi } from '../api';
+import { localizeTags, localizeDescription } from '../i18n/content';
+import '../styles/repertuar.scss';
 
 export default function SearchPage() {
+    const { t } = useTranslation();
     const [params] = useSearchParams();
     const query = params.get('query') || '';
     const [movies, setMovies] = useState([]);
@@ -19,26 +23,47 @@ export default function SearchPage() {
     return (
         <div className="repertuar-page">
             <div className="repertuar-container">
-                <h2 className="cinema-title">WYNIKI WYSZUKIWANIA: „{query}"</h2>
+                <header className="rep-head">
+                    <div className="rep-head-text">
+                        <p className="rep-eyebrow">{t('nav.search').replace('...', '')}</p>
+                        <h2 className="rep-title">„{query}”</h2>
+                    </div>
+                </header>
                 {loading ? (
-                    <p style={{ color: 'white' }}>Szukam...</p>
+                    <p className="rep-status">{t('searchPage.searching')}</p>
                 ) : movies.length > 0 ? (
                     <div className="movies-list">
                         {movies.map(m => (
                             <div className="movie-item" key={m.id}>
-                                <Link to={`/film/${m.id}`}>
-                                    <img src={m.posterUrl} alt={m.title} className="movie-poster" />
+                                <Link to={`/film/${m.id}`} className="movie-poster-link">
+                                    <img src={m.posterUrl} alt={m.title} className="movie-poster" loading="lazy" />
                                 </Link>
                                 <div className="movie-info">
-                                    <h4><Link to={`/film/${m.id}`} style={{ color: 'inherit', textDecoration: 'none' }}>{m.title}</Link></h4>
-                                    <div className="tags">🎬 {m.tags}</div>
-                                    {m.description && <p style={{ color: '#ccc', fontSize: '0.9rem' }}>{m.description}</p>}
+                                    <h4><Link to={`/film/${m.id}`}>{m.title}</Link></h4>
+                                    <div className="movie-chips">
+                                        {localizeTags(m.tags || '')
+                                            .split('|')
+                                            .map(chip => chip.trim())
+                                            .filter(Boolean)
+                                            .map(chip => (
+                                                <span key={chip} className="chip">{chip}</span>
+                                            ))}
+                                    </div>
+                                    {m.description && (
+                                        <p className="movie-desc">{localizeDescription(m.title, m.description)}</p>
+                                    )}
                                 </div>
+                                <Link to={`/film/${m.id}`} className="movie-more" aria-label={m.title}>
+                                    <i className="bi bi-chevron-right"></i>
+                                </Link>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <p style={{ color: 'white' }}>Nie znaleziono filmów pasujących do zapytania.</p>
+                    <div className="rep-empty">
+                        <i className="bi bi-binoculars"></i>
+                        <p className="rep-empty-title">{t('searchPage.noResults')}</p>
+                    </div>
                 )}
             </div>
         </div>

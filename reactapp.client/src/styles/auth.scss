@@ -5,6 +5,11 @@
 .auth-offcanvas {
     width: 420px !important;
 
+    @media (max-width: 576px) {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
     .offcanvas-header {
         background-color: #0d0d0d;
         padding: 1.5rem 2rem 0.5rem;
@@ -32,6 +37,49 @@
             font-size: 0.88rem;
             font-weight: 400;
             margin: 0.35rem 0 0;
+        }
+    }
+
+    // Korzyści z konta — wypełnia przestrzeń pod formularzem
+    .auth-perks {
+        margin-top: 2rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid $border-subtle;
+        border-radius: $radius-md;
+        padding: 1.1rem 1.25rem;
+
+        .auth-perks-title {
+            color: #cfcfcf;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            color: $text-muted;
+            font-size: 0.84rem;
+            font-weight: 400;
+            line-height: 1.45;
+
+            .bi {
+                color: $primary;
+                font-size: 0.95rem;
+                margin-top: 0.05rem;
+            }
         }
     }
 
@@ -148,6 +196,116 @@
         }
     }
 
+    // === Dropdown miasta (rejestracja) ===
+    .auth-city {
+        position: relative;
+
+        .auth-city-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            width: 100%;
+            padding: 0.65rem 0.95rem;
+            background-color: $surface-2;
+            border: 1px solid #333;
+            border-radius: $radius-sm;
+            color: #f1f1f1;
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+
+            .field-icon {
+                position: static;
+                transform: none;
+                color: #6a6a6a;
+                font-size: 0.95rem;
+                transition: color 0.2s ease;
+            }
+
+            span {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .auth-city-placeholder {
+                color: #5c5c5c;
+            }
+
+            .auth-city-caret {
+                font-size: 0.72rem;
+                color: #6a6a6a;
+                transition: transform 0.25s ease;
+            }
+        }
+
+        &.open .auth-city-toggle {
+            background-color: #202020;
+            border-color: $primary;
+
+            .field-icon {
+                color: $primary;
+            }
+
+            .auth-city-caret {
+                transform: rotate(180deg);
+            }
+        }
+
+        .auth-city-menu {
+            position: absolute;
+            top: calc(100% + 0.4rem);
+            left: 0;
+            right: 0;
+            z-index: 60;
+            max-height: 240px;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0.4rem;
+            list-style: none;
+            background: #141414;
+            border: 1px solid #333;
+            border-radius: $radius-sm;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.7);
+
+            li button {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+                width: 100%;
+                padding: 0.5rem 0.8rem;
+                border: none;
+                border-radius: $radius-sm;
+                background: none;
+                color: #d9d9d9;
+                font-size: 0.9rem;
+                font-weight: 400;
+                text-align: left;
+                cursor: pointer;
+                transition: background 0.15s ease, color 0.15s ease;
+
+                .bi-check-lg {
+                    color: $primary;
+                    font-size: 0.85rem;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.06);
+                    color: #fff;
+                }
+
+                &.selected {
+                    color: $primary;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
     .form-check-label {
         color: $text-muted !important;
         font-size: 0.85rem;
@@ -176,6 +334,85 @@
 
         &:focus {
             box-shadow: none;
+        }
+    }
+
+    // Checklista wymagań hasła — aktualizuje się przy każdym znaku
+    .password-rules {
+        list-style: none;
+        margin: 0.55rem 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+
+            .bi {
+                font-size: 0.72rem;
+                width: 14px;
+            }
+
+            &.bad {
+                color: #ff8f9a;
+            }
+
+            &.ok {
+                color: #7ee08a;
+            }
+        }
+    }
+
+    // Walidacja na żywo pod polem (np. zgodność haseł)
+    .field-feedback {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-top: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 500;
+
+        &.ok {
+            color: #7ee08a;
+        }
+
+        &.bad {
+            color: #ff8f9a;
+        }
+    }
+
+    // Wiersz „Zapamiętaj mnie" + link pomocy
+    .auth-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 0.25rem;
+
+        .form-check {
+            margin: 0;
+        }
+
+        .form-check-label {
+            font-size: 0.84rem;
+        }
+
+        .auth-help-link {
+            color: $text-muted;
+            font-size: 0.84rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: $primary;
+                text-decoration: underline;
+            }
         }
     }
 

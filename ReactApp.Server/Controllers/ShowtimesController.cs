@@ -21,7 +21,8 @@ public class ShowtimesController(CinemaDbContext db) : ControllerBase
             .Include(s => s.Movie)
             .Include(s => s.Hall).ThenInclude(h => h.Cinema)
             .Where(s => s.Hall.Cinema.City == city
-                        && s.StartsAt >= day && s.StartsAt < day.AddDays(1))
+                        && s.StartsAt >= day && s.StartsAt < day.AddDays(1)
+                        && !s.Movie.IsArchived)
             .OrderBy(s => s.StartsAt)
             .ToListAsync();
 
@@ -59,7 +60,11 @@ public class ShowtimesController(CinemaDbContext db) : ControllerBase
         return Ok(new ShowtimeDetailsDto(
             showtime.Id,
             showtime.StartsAt,
+            showtime.Movie.Id,
             showtime.Movie.Title,
+            showtime.Movie.PosterUrl,
+            showtime.Movie.Genre,
+            showtime.Movie.DurationMinutes,
             showtime.Hall.Cinema.City,
             showtime.Hall.Name,
             JsonSerializer.Deserialize<JsonElement>(showtime.Hall.LayoutJson),

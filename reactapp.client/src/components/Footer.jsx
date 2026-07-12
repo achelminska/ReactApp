@@ -1,45 +1,69 @@
-﻿import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+    const { t } = useTranslation();
+    const year = new Date().getFullYear();
+
     return (
-        <footer className="site-footer py-5">
-            <Container>
-                <Row className="justify-content-center">
-                    <Col xs={6} md={3} className="mb-4 text-center">
-                        <h5>O NAS</h5>
-                        <ul className="list-unstyled">
-                            <li><Link to="/kontakt">CinemaBox Poland</Link></li>
-                            <li><Link to="/kontakt/formularz">Kontakt</Link></li>
-                        </ul>
-                    </Col>
-                    <Col xs={6} md={3} className="mb-4 text-center">
-                        <h5>SERWIS</h5>
-                        <ul className="list-unstyled">
-                            <li><Link to="/repertuar">Repertuar</Link></li>
-                            <li><Link to="/kontakt">Baza wiedzy</Link></li>
-                        </ul>
-                    </Col>
-                    <Col xs={6} md={3} className="mb-4 text-center">
-                        <h5>INFORMACJE</h5>
-                        <ul className="list-unstyled">
-                            <li><Link to="/kontakt">Regulamin</Link></li>
-                            <li><Link to="/kontakt">Polityka prywatności</Link></li>
-                        </ul>
-                    </Col>
-                    <Col xs={6} md={3} className="mb-4 text-center">
-                        <h5>OBSERWUJ NAS</h5>
-                        <div className="d-flex justify-content-center gap-3">
-                            <a href="https://facebook.com" aria-label="Facebook" rel="noopener noreferrer"><i className="bi bi-facebook fs-4"></i></a>
-                            <a href="https://instagram.com" aria-label="Instagram" rel="noopener noreferrer"><i className="bi bi-instagram fs-4"></i></a>
-                            <a href="https://youtube.com" aria-label="YouTube" rel="noopener noreferrer"><i className="bi bi-youtube fs-4"></i></a>
+        <footer className="site-footer">
+            <div className="footer-inner">
+                <div className="footer-main">
+                    <div className="footer-brand">
+                        <Link to="/">
+                            <img src="/image/logo2.png" alt="CinemaBox" />
+                        </Link>
+                        <p>{t('footer.tagline')}</p>
+                        <div className="footer-social">
+                            <a href="https://facebook.com" aria-label="Facebook" rel="noopener noreferrer">
+                                <i className="bi bi-facebook"></i>
+                            </a>
+                            <a href="https://instagram.com" aria-label="Instagram" rel="noopener noreferrer">
+                                <i className="bi bi-instagram"></i>
+                            </a>
+                            <a href="https://youtube.com" aria-label="YouTube" rel="noopener noreferrer">
+                                <i className="bi bi-youtube"></i>
+                            </a>
                         </div>
-                    </Col>
-                </Row>
-                <div className="text-center mt-4">
-                    <small>© CinemaBox 2025 — projekt demonstracyjny</small>
+                    </div>
+
+                    <div className="footer-columns">
+                        <div className="footer-col">
+                            <h5>{t('footer.service')}</h5>
+                            <ul>
+                                <li><Link to="/repertuar">{t('footer.repertoire')}</Link></li>
+                                <li><Link to="/filmy/na-ekranie">{t('nav.onScreen')}</Link></li>
+                                <li><Link to="/moje-bilety">{t('nav.myTickets')}</Link></li>
+                                <li><Link to="/szukaj">{t('footer.searchEngine')}</Link></li>
+                            </ul>
+                        </div>
+                        <div className="footer-col">
+                            <h5>{t('footer.aboutUs')}</h5>
+                            <ul>
+                                <li><Link to="/kontakt">{t('footer.cinemaboxPoland')}</Link></li>
+                                <li><Link to="/kontakt/formularz">{t('footer.contact')}</Link></li>
+                            </ul>
+                        </div>
+                        <div className="footer-col">
+                            <h5>{t('footer.help')}</h5>
+                            <ul>
+                                <li><Link to="/kontakt">{t('footer.helpCenter')}</Link></li>
+                                <li><Link to="/kontakt/formularz">{t('footer.contactForm')}</Link></li>
+                                <li><a href="mailto:bok@cinemabox.pl">bok@cinemabox.pl</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </Container>
+
+                <div className="footer-bottom">
+                    <small>{t('footer.copyright', { year })}</small>
+                    <div className="footer-legal">
+                        <Link to="/regulamin">{t('footer.terms')}</Link>
+                        <Link to="/polityka-prywatnosci">{t('footer.privacy')}</Link>
+                        <Link to="/cookies">{t('footer.cookies')}</Link>
+                    </div>
+                </div>
+            </div>
         </footer>
     );
 }

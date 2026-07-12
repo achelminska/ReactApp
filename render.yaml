@@ -1,0 +1,26 @@
+# Blueprint Rendera — https://render.com/docs/blueprint-spec
+# Można też skonfigurować usługę ręcznie w dashboardzie: New > Web Service > Docker.
+services:
+  - type: web
+    name: cinemabox
+    runtime: docker
+    plan: starter
+    healthCheckPath: /
+    disk:
+      name: cinemabox-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      # Baza SQLite i plakaty na trwałym dysku — bez tego dane znikają po deployu
+      - key: ConnectionStrings__Default
+        value: Data Source=/var/data/cinemabox.db
+      - key: UPLOADS_PATH
+        value: /var/data/uploads
+      # Sekret JWT — Render wygeneruje losową wartość
+      - key: Jwt__Key
+        generateValue: true
+      # Konto administratora — ustaw wartości w dashboardzie Rendera
+      - key: Seed__AdminEmail
+        sync: false
+      - key: Seed__AdminPassword
+        sync: false

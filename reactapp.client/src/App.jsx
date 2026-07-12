@@ -1,9 +1,8 @@
 ﻿import './styles/App.scss';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
-import CarouselBanner from './components/CarouselBanner';
+import HeroBanner from './components/HeroBanner';
 import ScreenNow from './components/ScreenNow';
-import SearchSection from './components/SearchSection';
 import ScreenUpcoming from './components/ScreenUpcoming';
 import ScreenFamily from './components/ScreenFamily';
 import ContactPage from './pages/ContactPage';
@@ -14,6 +13,10 @@ import OrderSummaryPage from './pages/OrderSummaryPage';
 import RepertuarPage from './pages/RepertuarPage';
 import SearchPage from './pages/SearchPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
+import MoviesListPage from './pages/MoviesListPage';
+import MyBookingsPage from './pages/MyBookingsPage';
+import AccountPage from './pages/AccountPage';
+import LegalPage from './pages/LegalPage';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminRoute from './components/admin/AdminRoute';
@@ -22,6 +25,7 @@ import AdminMoviesPage from './pages/admin/AdminMoviesPage';
 import AdminShowtimesPage from './pages/admin/AdminShowtimesPage';
 import AdminBookingsPage from './pages/admin/AdminBookingsPage';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
+import AdminMessagesPage from './pages/admin/AdminMessagesPage';
 
 function App() {
     return (
@@ -32,18 +36,23 @@ function App() {
                     element={
                         <Layout>
                             <>
-                                <CarouselBanner />
+                                <HeroBanner />
                                 <ScreenNow />
                                 <ScreenUpcoming />
-                                <SearchSection />
                                 <ScreenFamily />
                             </>
                         </Layout>
                     }
                 />
                 <Route path="/repertuar" element={<Layout><RepertuarPage /></Layout>} />
+                <Route path="/filmy/:category" element={<Layout><MoviesListPage /></Layout>} />
                 <Route path="/film/:id" element={<Layout><MovieDetailsPage /></Layout>} />
+                <Route path="/moje-bilety" element={<Layout><MyBookingsPage /></Layout>} />
+                <Route path="/moje-konto" element={<Layout><AccountPage /></Layout>} />
                 <Route path="/szukaj" element={<Layout><SearchPage /></Layout>} />
+                <Route path="/regulamin" element={<Layout><LegalPage type="terms" /></Layout>} />
+                <Route path="/polityka-prywatnosci" element={<Layout><LegalPage type="privacy" /></Layout>} />
+                <Route path="/cookies" element={<Layout><LegalPage type="cookies" /></Layout>} />
                 <Route path="/kontakt" element={<ContactPage />} />
                 <Route path="/kontakt/formularz" element={<ContactFormPage />} />
                 <Route path="/rezerwacja/miejsca" element={<SeatSelectionPage />} />
@@ -65,6 +74,7 @@ function App() {
                     <Route path="repertuar" element={<AdminShowtimesPage />} />
                     <Route path="rezerwacje" element={<AdminBookingsPage />} />
                     <Route path="uzytkownicy" element={<AdminUsersPage />} />
+                    <Route path="wiadomosci" element={<AdminMessagesPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

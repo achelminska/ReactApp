@@ -3,13 +3,54 @@
 .screen-section {
     background-color: $dark-bg;
     position: relative;
-    padding: 1.5rem 0 0.5rem;
+    padding: 1.75rem 0 0.75rem;
+}
+
+// === Nagłówek sekcji ===
+
+.screen-head {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 0 1.5rem;
+    margin-bottom: 0.4rem;
+
+    h5 {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #fff;
+        white-space: nowrap;
+
+        // Pomarańczowy akcent przed tytułem
+        &::before {
+            content: '';
+            width: 4px;
+            height: 22px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, $primary, $primary-dark);
+            box-shadow: 0 0 14px rgba(245, 130, 30, 0.55);
+        }
+    }
+
+    // Linia wypełniająca resztę szerokości
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, $border-subtle, transparent 85%);
+    }
 }
 
 .screen-row {
     display: flex;
     overflow-x: auto;
-    padding: 1rem 0 1.5rem;
+    padding: 1rem 0 1.75rem;
     scrollbar-width: none;
     -ms-overflow-style: none;
 
@@ -17,6 +58,8 @@
         display: none;
     }
 }
+
+// === Strzałki przewijania ===
 
 .scroll-btn {
     position: absolute;
@@ -35,7 +78,12 @@
     cursor: pointer;
     z-index: 100;
     font-size: 1.1rem;
+    opacity: 0;
     transition: all 0.25s ease;
+
+    .screen-section:hover & {
+        opacity: 1;
+    }
 
     &:hover {
         background-color: $primary;
@@ -45,11 +93,11 @@
     }
 
     &-left {
-        left: 12px;
+        left: 14px;
     }
 
     &-right {
-        right: 12px;
+        right: 14px;
     }
 
     @media (max-width: 991px) {
@@ -57,43 +105,138 @@
     }
 }
 
+// === Kafelek filmu ===
+
 .movie-card {
     flex: 0 0 auto;
-    width: 185px;
-    text-align: center;
-    margin-right: 1.1rem;
+    width: 190px;
+    margin-right: 1.15rem;
 
     a {
         display: block;
+        text-decoration: none;
     }
 }
 
-.movie-img {
-    width: 100%;
-    height: 265px;
-    object-fit: cover;
+.movie-poster-wrap {
+    position: relative;
     border-radius: $radius-md;
+    overflow: hidden;
     border: 1px solid $border-subtle;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    background: $surface;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 272px;
+        object-fit: cover;
+        transition: transform 0.45s ease;
+    }
+
+    // Delikatny gradient u dołu — stale, dla głębi
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 72%, rgba(0, 0, 0, 0.55));
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
 
     .movie-card:hover & {
-        transform: translateY(-6px) scale(1.02);
+        transform: translateY(-6px);
         border-color: $border-accent;
-        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7), 0 0 18px rgba(245, 130, 30, 0.18);
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.7), 0 0 22px rgba(245, 130, 30, 0.16);
+
+        img {
+            transform: scale(1.07);
+        }
+    }
+}
+
+// Warstwa najazdu z przyciskiem
+.movie-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 1.1rem;
+    background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.88));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    .movie-card:hover & {
+        opacity: 1;
+    }
+
+    .movie-overlay-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.45rem 1.1rem;
+        border-radius: 50px;
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        color: #000;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        box-shadow: 0 6px 18px rgba(245, 130, 30, 0.4);
+        transform: translateY(8px);
+        transition: transform 0.3s ease;
+
+        .movie-card:hover & {
+            transform: translateY(0);
+        }
     }
 }
 
 .movie-title {
-    font-size: 0.88rem;
-    font-weight: 600;
+    margin: 0.7rem 0 0.1rem !important;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-top: 0.65rem !important;
     transition: color 0.25s ease;
 
     .movie-card:hover & {
         color: $primary !important;
+    }
+}
+
+.movie-sub {
+    margin: 0;
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: #8a8a8a;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 767px) {
+    .screen-head {
+        padding: 0 1rem;
+
+        h5 {
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+        }
+    }
+
+    .movie-card {
+        width: 150px;
+        margin-right: 0.9rem;
+    }
+
+    .movie-poster-wrap img {
+        height: 215px;
     }
 }

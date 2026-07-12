@@ -1,4 +1,4 @@
-import { apiFetch } from './client';
+import { apiFetch, apiUpload } from './client';
 
 export const authApi = {
     login: (email, password) =>
@@ -6,6 +6,12 @@ export const authApi = {
     register: (email, password, city) =>
         apiFetch('/api/auth/register', { method: 'POST', body: { email, password, city } }),
     me: () => apiFetch('/api/auth/me'),
+    updateProfile: (city) =>
+        apiFetch('/api/auth/me', { method: 'PUT', body: { city } }),
+    changePassword: (currentPassword, newPassword) =>
+        apiFetch('/api/auth/change-password', { method: 'POST', body: { currentPassword, newPassword } }),
+    changeEmail: (newEmail, currentPassword) =>
+        apiFetch('/api/auth/change-email', { method: 'POST', body: { newEmail, currentPassword } }),
 };
 
 export const moviesApi = {
@@ -54,10 +60,12 @@ export const contactApi = {
 
 export const adminApi = {
     stats: () => apiFetch('/api/admin/stats'),
+    upload: (file) => apiUpload('/api/admin/upload', file),
     movies: {
         list: () => apiFetch('/api/admin/movies'),
         create: (movie) => apiFetch('/api/admin/movies', { method: 'POST', body: movie }),
         update: (id, movie) => apiFetch(`/api/admin/movies/${id}`, { method: 'PUT', body: movie }),
+        toggleArchive: (id) => apiFetch(`/api/admin/movies/${id}/toggle-archive`, { method: 'POST' }),
         remove: (id) => apiFetch(`/api/admin/movies/${id}`, { method: 'DELETE' }),
     },
     showtimes: {
@@ -87,5 +95,11 @@ export const adminApi = {
         list: () => apiFetch('/api/admin/users'),
         toggleAdmin: (id) => apiFetch(`/api/admin/users/${id}/toggle-admin`, { method: 'POST' }),
         toggleBlock: (id) => apiFetch(`/api/admin/users/${id}/toggle-block`, { method: 'POST' }),
+    },
+    messages: {
+        list: (unreadOnly = false) =>
+            apiFetch(`/api/admin/messages${unreadOnly ? '?unreadOnly=true' : ''}`),
+        toggleRead: (id) => apiFetch(`/api/admin/messages/${id}/toggle-read`, { method: 'POST' }),
+        remove: (id) => apiFetch(`/api/admin/messages/${id}`, { method: 'DELETE' }),
     },
 };

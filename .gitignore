@@ -365,3 +365,12 @@ cinemabox.db
 cinemabox.db-shm
 cinemabox.db-wal
 FodyWeavers.xsd
+
+# ...ale snapshot danych dla deploymentu jest wersjonowany
+!deploy/seed/cinemabox.db
+
+# Frontend build output (budowany w Dockerze przy deployu)
+reactapp.client/dist/
+
+# Plakaty wgrane lokalnie przez panel admina
+ReactApp.Server/wwwroot/uploads/

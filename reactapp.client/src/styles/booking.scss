@@ -1,0 +1,300 @@
+@import 'variables';
+
+// === Wspólny pasek podsumowania przyklejony do dołu ===
+
+.booking-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid $border-subtle;
+
+    .booking-bar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0.9rem 1.5rem;
+    }
+
+    .booking-bar-info {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        flex-wrap: wrap;
+        min-width: 0;
+
+        .count {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
+
+        .hint {
+            color: $text-muted;
+            font-size: 0.9rem;
+        }
+    }
+
+    .seat-chips {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+
+        .seat-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(245, 130, 30, 0.12);
+            border: 1px solid rgba(245, 130, 30, 0.4);
+            border-radius: 50px;
+            color: $primary;
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 0.25rem 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            .bi {
+                font-size: 0.85rem;
+            }
+
+            &:hover {
+                background: rgba(220, 53, 69, 0.15);
+                border-color: rgba(220, 53, 69, 0.5);
+                color: #ff8f9a;
+            }
+        }
+    }
+
+    .booking-bar-actions {
+        display: flex;
+        gap: 0.6rem;
+        flex: 0 0 auto;
+    }
+
+    .back-button {
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: #ccc;
+        border: 1.5px solid #444;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            border-color: $primary;
+            color: $primary;
+        }
+    }
+
+    .submit-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.65rem 2rem;
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        color: #000;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.92rem;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 24px rgba(245, 130, 30, 0.35);
+
+        &:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(245, 130, 30, 0.5);
+        }
+
+        &:disabled {
+            background: #2c2c2c;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .booking-bar-inner {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.6rem;
+            padding: 0.75rem 1rem;
+        }
+
+        .booking-bar-info {
+            justify-content: center;
+        }
+
+        .booking-bar-actions {
+            justify-content: center;
+
+            .submit-button {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+// === Wspólny nagłówek kroków rezerwacji (miejsca → bilety → podsumowanie) ===
+
+.booking-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid $border-subtle;
+    background: $dark-bg;
+
+    .booking-hero-backdrop {
+        position: absolute;
+        inset: -40px;
+        background-size: cover;
+        background-position: center 20%;
+        filter: blur(30px) brightness(0.3) saturate(1.15);
+        transform: scale(1.12);
+
+        -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+        mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    }
+
+    .booking-hero-top {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem 0;
+
+        .booking-logo img {
+            height: 38px;
+        }
+    }
+
+    .booking-steps {
+        display: flex;
+        gap: 1.75rem;
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #8a8a8a;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+
+            .num {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                border: 1.5px solid #555;
+                font-size: 0.75rem;
+                font-weight: 700;
+            }
+
+            &.active {
+                color: #fff;
+
+                .num {
+                    background: $primary;
+                    border-color: $primary;
+                    color: #000;
+                }
+            }
+
+            &.done {
+                color: #b5b5b5;
+
+                .num {
+                    border-color: $primary;
+                    color: $primary;
+                }
+            }
+        }
+
+        @media (max-width: 640px) {
+            gap: 1rem;
+
+            .step {
+                font-size: 0;
+                gap: 0;
+
+                .num {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+    }
+
+    .booking-hero-movie {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.75rem 1.5rem 2.25rem;
+    }
+
+    .booking-poster {
+        width: 92px;
+        border-radius: $radius-md;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7);
+
+        @media (max-width: 640px) {
+            width: 72px;
+        }
+    }
+
+    .booking-movie-info {
+        h1 {
+            font-size: clamp(1.3rem, 3.5vw, 2rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+        }
+    }
+
+    .booking-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50px;
+            color: #ddd;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.3rem 0.85rem;
+
+            .bi {
+                color: $primary;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}

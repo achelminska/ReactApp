@@ -12,6 +12,10 @@ public class Movie
     public bool IsCurrentlyShowing { get; set; }
     public bool IsUpcoming { get; set; }
     public bool IsFamilyFriendly { get; set; }
+
+    // Film wycofany z oferty — niewidoczny publicznie, ale zachowany
+    // w bazie ze względu na historię rezerwacji i statystyki
+    public bool IsArchived { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<Showtime> Showtimes { get; set; } = [];

@@ -1,0 +1,455 @@
+@import 'variables';
+
+.account-page {
+    background: $dark-bg;
+    font-family: $font-main;
+    min-height: 100vh;
+    color: #fff;
+
+    .account-container {
+        max-width: 900px;
+        margin: 2.5rem auto 4rem;
+        padding: 0 1.25rem;
+    }
+
+    .acc-head {
+        margin-bottom: 2rem;
+    }
+
+    .acc-eyebrow {
+        margin: 0 0 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: $primary;
+    }
+
+    .acc-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 0;
+        font-size: 1.9rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+
+        &::before {
+            content: '';
+            width: 5px;
+            height: 34px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, $primary, $primary-dark);
+            box-shadow: 0 0 16px rgba(245, 130, 30, 0.5);
+        }
+    }
+
+    .acc-status {
+        color: $text-muted;
+        text-align: center;
+        padding: 2rem 0;
+    }
+
+    .acc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    // === Karty ===
+    .acc-card {
+        background: linear-gradient(135deg, $surface, #0e0e0e);
+        border: 1px solid $border-subtle;
+        border-radius: $radius-lg;
+        padding: 1.6rem 1.75rem 1.75rem;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+
+        h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 0 0 1.35rem;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+
+            .bi {
+                color: $primary;
+                font-size: 1.05rem;
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+    }
+
+    .acc-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #c9c9c9;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid $border-subtle;
+            border-radius: $radius-md;
+            color: #fff;
+            font-family: $font-main;
+            font-size: 0.92rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+            &:hover {
+                border-color: #3a3a3a;
+            }
+
+            &:focus {
+                border-color: $primary;
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(245, 130, 30, 0.15);
+            }
+        }
+    }
+
+    .acc-note {
+        color: $text-muted;
+        font-size: 0.76rem;
+    }
+
+    // Pole tylko do odczytu (e-mail)
+    .acc-readonly {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.7rem 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px dashed #3a3a3a;
+        border-radius: $radius-md;
+        color: #d9d9d9;
+        font-size: 0.92rem;
+
+        > .bi:first-child {
+            color: $primary;
+        }
+
+        span {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .acc-lock {
+            color: #555;
+            font-size: 0.85rem;
+        }
+    }
+
+    // Hasło z okiem
+    .acc-pass-wrap {
+        position: relative;
+
+        input {
+            padding-right: 2.7rem;
+        }
+
+        .acc-eye {
+            position: absolute;
+            right: 0.55rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6a6a6a;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+
+    // Checklist zasad hasła
+    .acc-pass-rules {
+        list-style: none;
+        margin: 0.2rem 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+
+            &.ok {
+                color: #6fdb8c;
+            }
+
+            &.bad {
+                color: #8a8a8a;
+            }
+        }
+    }
+
+    .acc-feedback {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        font-size: 0.82rem;
+
+        &.ok {
+            color: #6fdb8c;
+        }
+
+        &.bad {
+            color: #ff9d9d;
+        }
+    }
+
+    .acc-submit {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.65rem 1.7rem;
+        border: none;
+        border-radius: 50px;
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        color: #000;
+        font-family: $font-main;
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(245, 130, 30, 0.3);
+        transition: all 0.25s ease;
+
+        &:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(245, 130, 30, 0.45);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+    }
+
+    // === Dropdown miasta ===
+    .acc-city {
+        position: relative;
+
+        .acc-city-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid $border-subtle;
+            border-radius: $radius-md;
+            color: #fff;
+            font-family: $font-main;
+            font-size: 0.92rem;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+            > .bi:first-child {
+                color: #6a6a6a;
+                transition: color 0.2s ease;
+            }
+
+            span {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .acc-placeholder {
+                color: #5d5d5d;
+            }
+
+            .acc-city-caret {
+                font-size: 0.72rem;
+                color: $text-muted;
+                transition: transform 0.25s ease;
+            }
+
+            &:hover {
+                border-color: #3a3a3a;
+            }
+        }
+
+        &.open .acc-city-toggle {
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba(245, 130, 30, 0.15);
+
+            > .bi:first-child {
+                color: $primary;
+            }
+
+            .acc-city-caret {
+                transform: rotate(180deg);
+            }
+        }
+
+        .acc-city-menu {
+            position: absolute;
+            top: calc(100% + 0.45rem);
+            left: 0;
+            right: 0;
+            z-index: 50;
+            max-height: 240px;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0.4rem;
+            list-style: none;
+            background: #141414;
+            border: 1px solid $border-subtle;
+            border-radius: $radius-md;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.7);
+
+            li button {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+                width: 100%;
+                padding: 0.5rem 0.8rem;
+                border: none;
+                border-radius: $radius-sm;
+                background: none;
+                color: #d9d9d9;
+                font-family: $font-main;
+                font-size: 0.88rem;
+                font-weight: 500;
+                text-align: left;
+                cursor: pointer;
+                transition: background 0.15s ease, color 0.15s ease;
+
+                .bi-check-lg {
+                    color: $primary;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.06);
+                    color: #fff;
+                }
+
+                &.selected {
+                    color: $primary;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+
+    // Skrót do biletów
+    .acc-tickets-link {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1rem 1.4rem;
+        background: rgba(245, 130, 30, 0.05);
+        border: 1px solid rgba(245, 130, 30, 0.25);
+        border-radius: $radius-lg;
+        color: #e8e8e8;
+        font-size: 0.92rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        > .bi:first-child {
+            color: $primary;
+            font-size: 1.15rem;
+        }
+
+        span {
+            flex: 1;
+        }
+
+        > .bi:last-child {
+            color: $text-muted;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        &:hover {
+            border-color: rgba(245, 130, 30, 0.55);
+            background: rgba(245, 130, 30, 0.09);
+            color: #fff;
+
+            > .bi:last-child {
+                color: $primary;
+                transform: translateX(4px);
+            }
+        }
+    }
+
+    // === Pusty stan ===
+    .acc-empty {
+        text-align: center;
+        padding: 3.5rem 1rem;
+        border: 1px dashed #333;
+        border-radius: $radius-lg;
+
+        .bi {
+            font-size: 2.4rem;
+            color: $primary;
+            opacity: 0.8;
+        }
+
+        .acc-empty-title {
+            margin: 1rem 0 0.3rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #e8e8e8;
+        }
+
+        .acc-empty-hint {
+            margin: 0;
+            font-size: 0.88rem;
+            color: $text-muted;
+        }
+    }
+
+    // === Mobile ===
+    @media (max-width: 767px) {
+        .account-container {
+            margin-top: 1.75rem;
+        }
+
+        .acc-title {
+            font-size: 1.45rem;
+
+            &::before {
+                height: 26px;
+            }
+        }
+
+        .acc-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}

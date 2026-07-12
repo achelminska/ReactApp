@@ -1,10 +1,13 @@
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { moviesApi } from '../api';
 import { scrollByRef } from '../utils/scroll';
+import { localizeGenre } from '../i18n/content';
 
 export default function MovieCarousel({ title, category, excludeId }) {
+    const { t } = useTranslation();
     const rowRef = useRef(null);
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -31,11 +34,13 @@ export default function MovieCarousel({ title, category, excludeId }) {
 
     return (
         <Container fluid className="px-0 mt-5 screen-section">
-            <h5 className="text-center mb-4">{title}</h5>
+            <div className="screen-head">
+                <h5>{title}</h5>
+            </div>
             <button
                 className="scroll-btn scroll-btn-left"
                 onClick={() => scrollByRef(rowRef, -300)}
-                aria-label="Przewiń w lewo"
+                aria-label={t('home.scrollLeft')}
             >
                 <i className="bi bi-chevron-left"></i>
             </button>
@@ -44,19 +49,33 @@ export default function MovieCarousel({ title, category, excludeId }) {
                 className="screen-row d-flex overflow-auto px-3"
                 onScroll={handleScroll}
             >
-                {items.map((movie, idx) => (
-                    <div key={`${movie.id}-${idx}`} className="movie-card text-center me-3">
-                        <Link to={`/film/${movie.id}`} className="p-0 text-decoration-none">
-                            <img src={movie.posterUrl} alt={movie.title} className="movie-img" />
-                            <p className="movie-title text-white mt-2">{movie.title}</p>
-                        </Link>
-                    </div>
-                ))}
+                {items.map((movie, idx) => {
+                    const sub = [localizeGenre(movie.genre), movie.durationMinutes ? `${movie.durationMinutes} min` : null]
+                        .filter(Boolean)
+                        .join(' • ');
+                    return (
+                        <div key={`${movie.id}-${idx}`} className="movie-card">
+                            <Link to={`/film/${movie.id}`}>
+                                <div className="movie-poster-wrap">
+                                    <img src={movie.posterUrl} alt={movie.title} loading="lazy" />
+                                    <div className="movie-overlay">
+                                        <span className="movie-overlay-cta">
+                                            <i className="bi bi-ticket-perforated"></i>
+                                            {t('home.details')}
+                                        </span>
+                                    </div>
+                                </div>
+                                <p className="movie-title text-white">{movie.title}</p>
+                                {sub && <p className="movie-sub">{sub}</p>}
+                            </Link>
+                        </div>
+                    );
+                })}
             </div>
             <button
                 className="scroll-btn scroll-btn-right"
                 onClick={() => scrollByRef(rowRef, 300)}
-                aria-label="Przewiń w prawo"
+                aria-label={t('home.scrollRight')}
             >
                 <i className="bi bi-chevron-right"></i>
             </button>

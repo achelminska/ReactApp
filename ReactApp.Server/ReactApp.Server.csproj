@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\reactapp.client\reactapp.client.esproj">
+    <!-- W Dockerze frontend budujemy osobno (npm), więc publish backendu
+         pomija projekt klienta: dotnet publish -p:SkipClient=true -->
+    <ProjectReference Include="..\reactapp.client\reactapp.client.esproj" Condition="'$(SkipClient)' != 'true'">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

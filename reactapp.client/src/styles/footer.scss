@@ -1,44 +1,229 @@
 ﻿@import 'variables';
 
 .site-footer {
-    background: linear-gradient(to bottom, $dark-bg, #050505);
+    background: linear-gradient(to bottom, $dark-bg, #030303);
     border-top: 1px solid $border-subtle;
     color: $text-muted;
-    padding: 3.5rem 0 2rem;
     margin-bottom: 80px;
 
-    h5 {
-        color: $primary;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        margin-bottom: 1.1rem;
+    .footer-inner {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 3.5rem 1.5rem 0;
     }
 
-    a {
-        color: $text-muted;
-        text-decoration: none;
-        font-size: 0.9rem;
-        line-height: 2;
-        transition: color 0.2s ease;
+    .footer-main {
+        display: flex;
+        justify-content: space-between;
+        gap: 3rem;
+        padding-bottom: 2.75rem;
+    }
 
-        &:hover {
-            color: $primary;
-            text-decoration: none;
+    // --- Kolumna marki ---
+    .footer-brand {
+        flex: 0 1 300px;
+
+        img {
+            height: 42px;
+            margin-bottom: 1.1rem;
+        }
+
+        p {
+            font-size: 0.87rem;
+            line-height: 1.65;
+            color: #8a8a8a;
+            margin-bottom: 1.4rem;
         }
     }
 
-    .bi {
-        transition: transform 0.2s ease, color 0.2s ease;
+    .footer-social {
+        display: flex;
+        gap: 0.65rem;
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid $border-subtle;
+            color: #9a9a9a;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+
+            &:hover {
+                background: rgba(245, 130, 30, 0.12);
+                border-color: $border-accent;
+                color: $primary;
+                transform: translateY(-3px);
+            }
+        }
     }
 
-    a:hover .bi {
-        transform: translateY(-3px);
-        color: $primary;
+    // --- Kolumny linków ---
+    .footer-columns {
+        display: flex;
+        gap: 4rem;
+        flex-wrap: wrap;
     }
 
-    small {
-        color: #555;
-        letter-spacing: 0.5px;
+    .footer-col {
+        h5 {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.1rem;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        a {
+            display: inline-block;
+            color: #8a8a8a;
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+
+            &:hover {
+                color: $primary;
+                transform: translateX(4px);
+            }
+        }
+    }
+
+    // --- Dolny pasek ---
+    .footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        border-top: 1px solid $border-subtle;
+        padding: 1.4rem 0;
+
+        small {
+            color: #5c5c5c;
+            font-size: 0.8rem;
+            letter-spacing: 0.4px;
+        }
+    }
+
+    .footer-legal {
+        display: flex;
+        gap: 1.5rem;
+
+        a {
+            color: #5c5c5c;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+
+    // --- Mobile ---
+    @media (max-width: 900px) {
+        .footer-main {
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .footer-brand {
+            flex: 1 1 auto;
+        }
+
+        .footer-columns {
+            gap: 2rem 3rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        // Odsunięcie od pływającego przycisku „Kup bilet"
+        margin-bottom: 104px;
+
+        .footer-inner {
+            padding-top: 2.25rem;
+        }
+
+        .footer-main {
+            gap: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        // Marka wyśrodkowana jak wizytówka
+        .footer-brand {
+            text-align: center;
+
+            img {
+                height: 38px;
+                margin-bottom: 0.9rem;
+            }
+
+            p {
+                max-width: 36ch;
+                margin: 0 auto 1.2rem;
+                font-size: 0.84rem;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+        }
+
+        // Linki w dwóch kolumnach zamiast jednej długiej
+        .footer-columns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.75rem 1.25rem;
+        }
+
+        .footer-col {
+            h5 {
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.55rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            }
+
+            ul {
+                gap: 0.65rem;
+            }
+
+            a {
+                font-size: 0.84rem;
+
+                // Przesuwanie linków przy dotyku nie ma sensu
+                &:hover {
+                    transform: none;
+                }
+            }
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            gap: 0.9rem;
+            padding: 1.3rem 0 1.6rem;
+        }
+
+        .footer-legal {
+            gap: 1.1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
 }

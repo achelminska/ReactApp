@@ -14,7 +14,8 @@ public class MoviesController(CinemaDbContext db) : ControllerBase
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(
         [FromQuery] string? category, [FromQuery] string? search)
     {
-        var query = db.Movies.AsNoTracking();
+        // Zarchiwizowane filmy nie są widoczne w publicznym katalogu
+        var query = db.Movies.AsNoTracking().Where(m => !m.IsArchived);
 
         query = category?.ToLowerInvariant() switch
         {
@@ -60,5 +61,5 @@ public class MoviesController(CinemaDbContext db) : ControllerBase
 
     internal static MovieDto ToDto(Movie m) => new(
         m.Id, m.Title, m.Description, m.PosterUrl, m.DurationMinutes, m.Genre, m.Tags,
-        m.IsCurrentlyShowing, m.IsUpcoming, m.IsFamilyFriendly);
+        m.IsCurrentlyShowing, m.IsUpcoming, m.IsFamilyFriendly, m.IsArchived);
 }

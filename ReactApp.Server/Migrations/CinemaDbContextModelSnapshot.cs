@@ -401,6 +401,9 @@ namespace ReactApp.Server.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsCurrentlyShowing")
                         .HasColumnType("INTEGER");
 

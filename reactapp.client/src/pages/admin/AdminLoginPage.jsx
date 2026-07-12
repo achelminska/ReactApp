@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert, Button, Form, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/admin.scss';
 
 export default function AdminLoginPage() {
+    const { t } = useTranslation();
     const { user, isAdmin, loading, login } = useAuth();
     const navigate = useNavigate();
     const [email, setEmail] = useState('admin@cinemabox.pl');
@@ -27,10 +29,10 @@ export default function AdminLoginPage() {
             if (loggedUser.roles?.includes('Admin')) {
                 navigate('/admin', { replace: true });
             } else {
-                setError('To konto nie ma uprawnień administratora. Zaloguj się jako admin@cinemabox.pl');
+                setError(t('admin.login.notAdminRole', { email: 'admin@cinemabox.pl' }));
             }
         } catch (err) {
-            setError(err.message || 'Nie udało się zalogować.');
+            setError(err.message || t('admin.login.loginFailed'));
         } finally {
             setSubmitting(false);
         }
@@ -48,14 +50,14 @@ export default function AdminLoginPage() {
         <div className="admin-login-page">
             <div className="admin-login-card">
                 <img src="/image/logo2.png" alt="CinemaBox" className="admin-login-logo" />
-                <h1>Panel administratora</h1>
+                <h1>{t('admin.login.title')}</h1>
                 <p className="admin-login-hint">
-                    Wymagane konto z rolą Admin. W środowisku dev: <strong>admin@cinemabox.pl</strong>
+                    {t('admin.login.hint')} <strong>admin@cinemabox.pl</strong>
                 </p>
 
                 {user && !isAdmin && (
                     <Alert variant="warning">
-                        Jesteś zalogowana jako <strong>{user.email}</strong>, ale to konto nie ma dostępu do panelu admina.
+                        {t('admin.login.loggedNotAdmin', { email: user.email })}
                     </Alert>
                 )}
 
@@ -63,7 +65,7 @@ export default function AdminLoginPage() {
 
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
-                        <Form.Label>E-mail</Form.Label>
+                        <Form.Label>{t('admin.login.email')}</Form.Label>
                         <Form.Control
                             type="email"
                             value={email}
@@ -72,7 +74,7 @@ export default function AdminLoginPage() {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Hasło</Form.Label>
+                        <Form.Label>{t('admin.login.password')}</Form.Label>
                         <Form.Control
                             type="password"
                             value={password}
@@ -81,11 +83,11 @@ export default function AdminLoginPage() {
                         />
                     </Form.Group>
                     <Button type="submit" variant="warning" className="w-100 fw-bold" disabled={submitting}>
-                        {submitting ? <Spinner size="sm" animation="border" /> : 'Zaloguj do panelu'}
+                        {submitting ? <Spinner size="sm" animation="border" /> : t('admin.login.submit')}
                     </Button>
                 </Form>
 
-                <Link to="/" className="admin-login-back">← Wróć na stronę główną</Link>
+                <Link to="/" className="admin-login-back">{t('admin.login.back')}</Link>
             </div>
         </div>
     );

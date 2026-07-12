@@ -46,4 +46,158 @@
         outline: none !important;
         box-shadow: none !important;
     }
+
+    // === Panel zalogowanego użytkownika ===
+    .user-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+        padding: 0.5rem 1.25rem 1.5rem;
+    }
+
+    .user-panel-head {
+        display: flex;
+        align-items: center;
+        gap: 0.95rem;
+        padding: 1.1rem 1.15rem;
+        background: linear-gradient(135deg, rgba(245, 130, 30, 0.1), rgba(245, 130, 30, 0.03));
+        border: 1px solid rgba(245, 130, 30, 0.25);
+        border-radius: $radius-lg;
+    }
+
+    .user-avatar {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        color: #000;
+        font-size: 1.3rem;
+        font-weight: 800;
+        box-shadow: 0 6px 18px rgba(245, 130, 30, 0.35);
+    }
+
+    .user-panel-id {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-width: 0;
+    }
+
+    .user-panel-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: $text-muted;
+    }
+
+    .user-panel-email {
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-panel-logout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        margin-top: auto;
+        padding: 0.85rem 1.15rem;
+        background: transparent;
+        border: 1px solid rgba(255, 90, 90, 0.35);
+        border-radius: 50px;
+        color: #ff9d9d;
+        font-family: $font-main;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:active,
+        &:hover {
+            background: rgba(255, 90, 90, 0.1);
+            border-color: rgba(255, 90, 90, 0.6);
+            color: #ffbcbc;
+        }
+    }
+}
+
+// === Wspólne kafelki menu w offcanvasach (hamburger + panel użytkownika) ===
+.offcanvas-custom {
+    .panel-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .panel-tile {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        width: 100%;
+        padding: 0.95rem 1.15rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: $radius-md;
+        color: #e8e8e8;
+        font-family: $font-main;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        > .bi:first-child {
+            color: $primary;
+            font-size: 1.1rem;
+        }
+
+        span {
+            flex: 1;
+        }
+
+        .chev {
+            font-size: 0.8rem;
+            color: #555;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        &:active,
+        &:hover {
+            background: rgba(245, 130, 30, 0.1);
+            border-color: rgba(245, 130, 30, 0.4);
+            color: #fff;
+
+            .chev {
+                color: $primary;
+                transform: translateX(3px);
+            }
+        }
+    }
+
+    // Hamburgerowe menu nawigacji
+    .mobile-nav-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+        padding: 0.5rem 1.25rem 1.5rem;
+    }
+
+    .mobile-nav-footer {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+        padding-top: 1.1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
 }

@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import '../styles/searchinput.scss';
 
 export default function SearchInput({ onSearch }) {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const inputRef = useRef(null);
 
@@ -24,7 +26,7 @@ export default function SearchInput({ onSearch }) {
 
     return (
         <div className="search-input-wrapper d-flex align-items-center">
-            <div className="search-icon" onClick={toggleOpen} role="button" aria-label="Otwórz wyszukiwanie">
+            <div className="search-icon" onClick={toggleOpen} role="button" aria-label={t('nav.openSearch')}>
                 <i className="bi bi-search"></i>
             </div>
             <Form className={open ? 'd-flex search-form show' : 'd-flex search-form'} onSubmit={handleSubmit}>
@@ -32,7 +34,7 @@ export default function SearchInput({ onSearch }) {
                     <Form.Control
                         ref={inputRef}
                         type="text"
-                        placeholder="Szukaj..."
+                        placeholder={t('nav.search')}
                         className="search-input"
                         onBlur={() => setOpen(false)}
                     />

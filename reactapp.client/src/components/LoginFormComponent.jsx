@@ -1,13 +1,16 @@
 ﻿import { useState } from 'react';
 import { Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import '../styles/auth.scss';
 
 export default function LoginFormComponent({ onSuccess }) {
+    const { t } = useTranslation();
     const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [showPass, setShowPass] = useState(false);
+    const [remember, setRemember] = useState(true);
     const [error, setError] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
@@ -16,10 +19,10 @@ export default function LoginFormComponent({ onSuccess }) {
         setError('');
         setSubmitting(true);
         try {
-            await login(email, pass);
+            await login(email, pass, remember);
             if (onSuccess) onSuccess();
         } catch (err) {
-            setError(err.message || 'Nie udało się zalogować.');
+            setError(err.message || t('auth.loginFailed'));
         } finally {
             setSubmitting(false);
         }
@@ -29,11 +32,11 @@ export default function LoginFormComponent({ onSuccess }) {
         <Form className="auth-form" onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group controlId="loginEmail" className="mb-3">
-                <Form.Label>E-mail</Form.Label>
+                <Form.Label>{t('auth.email')}</Form.Label>
                 <div className="input-icon-group">
                     <Form.Control
                         type="email"
-                        placeholder="twoj@email.pl"
+                        placeholder={t('auth.emailPlaceholder')}
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         required
@@ -42,12 +45,12 @@ export default function LoginFormComponent({ onSuccess }) {
                 </div>
             </Form.Group>
             <Form.Group controlId="loginPass" className="mb-3">
-                <Form.Label>Hasło</Form.Label>
+                <Form.Label>{t('auth.password')}</Form.Label>
                 <div className="input-icon-group">
                     <Form.Control
                         type={showPass ? 'text' : 'password'}
                         className="has-toggle"
-                        placeholder="Twoje hasło"
+                        placeholder={t('auth.passwordPlaceholder')}
                         value={pass}
                         onChange={e => setPass(e.target.value)}
                         required
@@ -56,15 +59,25 @@ export default function LoginFormComponent({ onSuccess }) {
                     <button
                         type="button"
                         className="toggle-password"
-                        aria-label={showPass ? 'Ukryj hasło' : 'Pokaż hasło'}
+                        aria-label={showPass ? t('auth.hidePassword') : t('auth.showPassword')}
                         onClick={() => setShowPass(v => !v)}
                     >
                         <i className={showPass ? 'bi bi-eye-slash' : 'bi bi-eye'}></i>
                     </button>
                 </div>
             </Form.Group>
+            <div className="auth-options">
+                <Form.Check
+                    type="checkbox"
+                    id="rememberMe"
+                    label={t('auth.rememberMe')}
+                    checked={remember}
+                    onChange={e => setRemember(e.target.checked)}
+                />
+                <a href="/kontakt" className="auth-help-link">{t('auth.forgotPassword')}</a>
+            </div>
             <Button type="submit" className="auth-submit" disabled={submitting}>
-                {submitting ? <Spinner size="sm" animation="border" /> : 'Zaloguj się'}
+                {submitting ? <Spinner size="sm" animation="border" /> : t('auth.loginBtn')}
             </Button>
         </Form>
     );

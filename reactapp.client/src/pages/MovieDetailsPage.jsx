@@ -1,34 +1,43 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cinemasApi, moviesApi } from '../api';
 import MovieCarousel from '../components/MovieCarousel';
+import { dateLocale } from '../i18n';
+import { localizeGenre, localizeTags, localizeDescription, localizeHall } from '../i18n/content';
 import '../styles/moviedetails.scss';
 
 const DAYS_AHEAD = 7;
 
-function buildDays() {
-    const labels = ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'];
+function buildDays(t) {
     return Array.from({ length: DAYS_AHEAD }, (_, i) => {
         const date = new Date();
         date.setDate(date.getDate() + i);
         return {
             iso: date.toISOString().slice(0, 10),
-            label: i === 0 ? 'Dziś' : i === 1 ? 'Jutro' : labels[date.getDay()],
-            dayNumber: date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' }),
+            label: i === 0
+                ? t('common.today')
+                : i === 1
+                    ? t('common.tomorrow')
+                    : date.toLocaleDateString(dateLocale(), { weekday: 'short' }).replace('.', ''),
+            dayNumber: date.toLocaleDateString(dateLocale(), { day: '2-digit', month: '2-digit' }),
         };
     });
 }
 
 export default function MovieDetailsPage() {
+    const { t, i18n } = useTranslation();
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const showtimesRef = useRef(null);
 
     const [movie, setMovie] = useState(null);
     const [notFound, setNotFound] = useState(false);
     const [cities, setCities] = useState([]);
     const [city, setCity] = useState('Warszawa');
-    const days = useMemo(buildDays, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const days = useMemo(() => buildDays(t), [i18n.resolvedLanguage]);
     const [selectedDay, setSelectedDay] = useState(days[0].iso);
     const [showtimes, setShowtimes] = useState([]);
     const [loadingShowtimes, setLoadingShowtimes] = useState(true);
@@ -54,14 +63,21 @@ export default function MovieDetailsPage() {
             .finally(() => setLoadingShowtimes(false));
     }, [id, city, selectedDay]);
 
+    // Przejście z "Kup bilet" na banerze — zjedź od razu do sekcji seansów
+    useEffect(() => {
+        if (movie && location.state?.scrollTo === 'showtimes') {
+            setTimeout(() => showtimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+        }
+    }, [movie, location.state]);
+
     if (notFound) {
         return (
             <div className="movie-details-page">
                 <div className="movie-not-found">
                     <i className="bi bi-film"></i>
-                    <h2>Nie znaleziono filmu</h2>
-                    <p>Film mógł zostać wycofany z repertuaru.</p>
-                    <Link to="/" className="btn-back-home">Wróć na stronę główną</Link>
+                    <h2>{t('movie.notFoundTitle')}</h2>
+                    <p>{t('movie.notFoundText')}</p>
+                    <Link to="/" className="btn-back-home">{t('movie.backHome')}</Link>
                 </div>
             </div>
         );
@@ -70,7 +86,7 @@ export default function MovieDetailsPage() {
     if (!movie) {
         return (
             <div className="movie-details-page">
-                <div className="movie-details-loading">Ładowanie...</div>
+                <div className="movie-details-loading">{t('common.loading')}</div>
             </div>
         );
     }
@@ -104,15 +120,15 @@ export default function MovieDetailsPage() {
                     </div>
                     <div className="movie-hero-info">
                         <div className="movie-badges">
-                            {movie.isCurrentlyShowing && <span className="movie-badge now">Na ekranie</span>}
-                            {movie.isUpcoming && <span className="movie-badge upcoming">Wkrótce</span>}
-                            {movie.isFamilyFriendly && <span className="movie-badge family">Dla rodzin</span>}
+                            {movie.isCurrentlyShowing && <span className="movie-badge now">{t('movie.badgeNow')}</span>}
+                            {movie.isUpcoming && <span className="movie-badge upcoming">{t('movie.badgeUpcoming')}</span>}
+                            {movie.isFamilyFriendly && <span className="movie-badge family">{t('movie.badgeFamily')}</span>}
                         </div>
                         <h1 className="movie-hero-title">{movie.title}</h1>
                         <div className="movie-meta">
                             {movie.genre && (
                                 <span className="meta-item">
-                                    <i className="bi bi-tag"></i>{movie.genre}
+                                    <i className="bi bi-tag"></i>{localizeGenre(movie.genre)}
                                 </span>
                             )}
                             <span className="meta-item">
@@ -120,18 +136,18 @@ export default function MovieDetailsPage() {
                             </span>
                             {movie.tags && (
                                 <span className="meta-item">
-                                    <i className="bi bi-badge-hd"></i>{movie.tags}
+                                    <i className="bi bi-badge-hd"></i>{localizeTags(movie.tags)}
                                 </span>
                             )}
                         </div>
-                        {movie.description && <p className="movie-description">{movie.description}</p>}
+                        {movie.description && <p className="movie-description">{localizeDescription(movie.title, movie.description)}</p>}
                         {movie.isCurrentlyShowing || movie.isFamilyFriendly ? (
                             <button className="btn-show-times" onClick={scrollToShowtimes}>
-                                <i className="bi bi-ticket-perforated me-2"></i>Zobacz seanse
+                                <i className="bi bi-ticket-perforated me-2"></i>{t('movie.seeShowtimes')}
                             </button>
                         ) : (
                             <div className="upcoming-note">
-                                <i className="bi bi-hourglass-split me-2"></i>Wkrótce w kinach CinemaBox
+                                <i className="bi bi-hourglass-split me-2"></i>{t('movie.soonInCinemas')}
                             </div>
                         )}
                     </div>
@@ -141,7 +157,7 @@ export default function MovieDetailsPage() {
             {/* SEANSE */}
             {(movie.isCurrentlyShowing || movie.isFamilyFriendly) && (
                 <div className="movie-showtimes" ref={showtimesRef}>
-                    <h2 className="section-heading">Kup bilet</h2>
+                    <h2 className="section-heading">{t('movie.buyTicket')}</h2>
 
                     <div className="showtimes-controls">
                         <div className="city-picker">
@@ -166,17 +182,17 @@ export default function MovieDetailsPage() {
 
                     <div className="showtimes-grid">
                         {loadingShowtimes ? (
-                            <p className="showtimes-empty">Ładowanie seansów...</p>
+                            <p className="showtimes-empty">{t('movie.loadingShowtimes')}</p>
                         ) : showtimes.length > 0 ? (
                             showtimes.map(st => (
                                 <button key={st.showtimeId} className="showtime-slot" onClick={() => goToSeats(st)}>
                                     <span className="slot-time">{st.time}</span>
-                                    <span className="slot-hall">{st.hallName}</span>
+                                    <span className="slot-hall">{localizeHall(st.hallName)}</span>
                                 </button>
                             ))
                         ) : (
                             <p className="showtimes-empty">
-                                Brak seansów w tym dniu w mieście {city}. Wybierz inny dzień lub miasto.
+                                {t('movie.noShowtimesCity', { city })}
                             </p>
                         )}
                     </div>
@@ -185,7 +201,7 @@ export default function MovieDetailsPage() {
 
             {/* PODOBNE FILMY */}
             <div className="movie-similar">
-                <MovieCarousel title="ZOBACZ RÓWNIEŻ" category={similarCategory} excludeId={movie.id} />
+                <MovieCarousel title={t('movie.seeAlso')} category={similarCategory} excludeId={movie.id} />
             </div>
         </div>
     );

@@ -1,0 +1,185 @@
+@import 'variables';
+
+.movies-page {
+    background: $dark-bg;
+    font-family: $font-main;
+    min-height: 100vh;
+    color: #fff;
+
+    .movies-page-container {
+        max-width: 1100px;
+        margin: 2.5rem auto 4rem;
+        padding: 0 1.25rem;
+    }
+
+    // === Nagłówek ===
+    .mp-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .mp-eyebrow {
+        margin: 0 0 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: $primary;
+    }
+
+    .mp-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 0 0 0.5rem;
+        font-size: 1.9rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+
+        &::before {
+            content: '';
+            width: 5px;
+            height: 34px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, $primary, $primary-dark);
+            box-shadow: 0 0 16px rgba(245, 130, 30, 0.5);
+        }
+    }
+
+    .mp-desc {
+        margin: 0;
+        max-width: 560px;
+        color: $text-muted;
+        font-size: 0.92rem;
+        line-height: 1.6;
+    }
+
+    .mp-count {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.5rem 1.1rem;
+        border: 1px solid $border-subtle;
+        border-radius: 50px;
+        background: $surface;
+        color: #c9c9c9;
+        font-size: 0.88rem;
+        font-weight: 500;
+        white-space: nowrap;
+
+        .bi {
+            color: $primary;
+        }
+    }
+
+    // === Zakładki kategorii ===
+    .mp-tabs {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.25rem;
+    }
+
+    .mp-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.55rem 1.25rem;
+        border: 1px solid $border-subtle;
+        border-radius: 50px;
+        background: $surface;
+        color: #d9d9d9;
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        .bi {
+            color: $primary;
+            font-size: 0.95rem;
+        }
+
+        &:hover {
+            border-color: $border-accent;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        &.active {
+            background: linear-gradient(135deg, $primary, $primary-dark);
+            border-color: $primary;
+            color: #000;
+            box-shadow: 0 6px 18px rgba(245, 130, 30, 0.35);
+
+            .bi {
+                color: #000;
+            }
+        }
+    }
+
+    // === Siatka plakatów (nadpisuje karuzelowe .movie-card) ===
+    .mp-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(172px, 1fr));
+        gap: 1.5rem 1.15rem;
+
+        .movie-card {
+            width: auto;
+            margin-right: 0;
+        }
+
+        .movie-poster-wrap img {
+            height: auto;
+            aspect-ratio: 2 / 3;
+        }
+    }
+
+    .mp-status {
+        color: $text-muted;
+        text-align: center;
+        padding: 2rem 0;
+    }
+
+    .mp-empty {
+        text-align: center;
+        padding: 3.5rem 1rem;
+        border: 1px dashed #333;
+        border-radius: $radius-lg;
+
+        .bi {
+            font-size: 2.4rem;
+            color: $primary;
+            opacity: 0.8;
+        }
+
+        p {
+            margin: 1rem 0 0;
+            color: #e8e8e8;
+            font-weight: 600;
+        }
+    }
+
+    // === Mobile ===
+    @media (max-width: 767px) {
+        .movies-page-container {
+            margin-top: 1.75rem;
+        }
+
+        .mp-title {
+            font-size: 1.45rem;
+
+            &::before {
+                height: 26px;
+            }
+        }
+
+        .mp-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1.25rem 0.9rem;
+        }
+    }
+}

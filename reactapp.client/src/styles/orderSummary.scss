@@ -56,6 +56,94 @@
             gap: 0.7rem;
             margin-top: 1.25rem;
 
+            // Przełącznik „użyj moich danych" dla zalogowanych
+            .autofill-toggle {
+                display: flex;
+                align-items: center;
+                gap: 0.9rem;
+                width: 100%;
+                padding: 0.8rem 1.05rem;
+                margin-bottom: 0.35rem;
+                background: rgba(245, 130, 30, 0.05);
+                border: 1px solid rgba(245, 130, 30, 0.25);
+                border-radius: $radius-md;
+                color: #e8e8e8;
+                font-family: $font-main;
+                text-align: left;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                .autofill-switch {
+                    flex: 0 0 auto;
+                    position: relative;
+                    width: 38px;
+                    height: 21px;
+                    border-radius: 21px;
+                    background: #3a3a3a;
+                    transition: background 0.25s ease;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 2.5px;
+                        left: 3px;
+                        width: 16px;
+                        height: 16px;
+                        border-radius: 50%;
+                        background: #bdbdbd;
+                        transition: all 0.25s ease;
+                    }
+                }
+
+                .autofill-text {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.1rem;
+
+                    strong {
+                        font-size: 0.88rem;
+                        font-weight: 700;
+                    }
+
+                    small {
+                        font-size: 0.76rem;
+                        color: $text-muted;
+                        line-height: 1.4;
+                    }
+                }
+
+                > .bi {
+                    flex: 0 0 auto;
+                    font-size: 1.15rem;
+                    color: $text-muted;
+                    transition: color 0.2s ease;
+                }
+
+                &:hover {
+                    border-color: rgba(245, 130, 30, 0.5);
+                    background: rgba(245, 130, 30, 0.09);
+                }
+
+                &.on {
+                    border-color: $primary;
+                    background: rgba(245, 130, 30, 0.12);
+
+                    .autofill-switch {
+                        background: $primary;
+
+                        &::after {
+                            left: 19px;
+                            background: #000;
+                        }
+                    }
+
+                    > .bi {
+                        color: $primary;
+                    }
+                }
+            }
+
             input:not([type="checkbox"]) {
                 padding: 0.75rem 1rem;
                 border: 1px solid #3a3a3a;
@@ -216,35 +304,5 @@
             }
         }
 
-        .booking-header {
-            .top-header {
-                height: 50px;
-
-                .logo-container {
-                    display: none;
-                }
-
-                .top-bar {
-                    position: relative;
-                    left: 0;
-                    transform: none;
-                    justify-content: center;
-                    width: 100%;
-                    font-size: 0.7rem;
-                    gap: 0.7rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-
-                    .step {
-                        line-height: 1.1;
-                    }
-                }
-            }
-
-            .movie-bar {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.5rem;
-            }
-        }
     }
 }

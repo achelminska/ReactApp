@@ -1,23 +1,6 @@
 ﻿@import 'variables';
 
 
-.floating-zakup-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1051;
-}
-
-.button-kupbilet {
-    background-color: $primary;
-    color: black;
-
-    &:hover, &:focus, &:active {
-        background-color: #dd7419;
-    }
-}
-
 .offcanvas-custom {
     background-color: #0d0d0d;
     color: $primary;
@@ -82,5 +65,15 @@
 
     @media (min-width: 700px) {
         border-left: 2px solid $primary !important;
+    }
+
+    // Na telefonach panel wysuwa się na całą szerokość ekranu
+    @media (max-width: 576px) {
+        &.offcanvas.offcanvas-end,
+        &.offcanvas.offcanvas-start {
+            width: 100%;
+            max-width: 100%;
+            border-left: none;
+        }
     }
 }

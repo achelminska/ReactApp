@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { authApi } from '../api';
-import { getToken, setToken } from '../api/client';
+import { getToken, setToken, isTokenRemembered } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -24,9 +24,9 @@ export function AuthProvider({ children }) {
             .finally(() => setLoading(false));
     }, []);
 
-    const login = useCallback(async (email, password) => {
+    const login = useCallback(async (email, password, remember = true) => {
         const { token, user: loggedUser } = await authApi.login(email, password);
-        setToken(token);
+        setToken(token, remember);
         setUser(normalizeUser(loggedUser));
         return normalizeUser(loggedUser);
     }, []);
@@ -43,10 +43,25 @@ export function AuthProvider({ children }) {
         setUser(null);
     }, []);
 
+    const updateProfile = useCallback(async (city) => {
+        const updated = await authApi.updateProfile(city);
+        setUser(normalizeUser(updated));
+        return normalizeUser(updated);
+    }, []);
+
+    const changeEmail = useCallback(async (newEmail, currentPassword) => {
+        // Zapamiętaj sposób przechowywania zanim setToken wyczyści oba magazyny
+        const remember = isTokenRemembered();
+        const { token, user: updated } = await authApi.changeEmail(newEmail, currentPassword);
+        setToken(token, remember);
+        setUser(normalizeUser(updated));
+        return normalizeUser(updated);
+    }, []);
+
     const isAdmin = !!user?.roles?.includes('Admin');
 
     return (
-        <AuthContext.Provider value={{ user, loading, isAdmin, login, register, logout }}>
+        <AuthContext.Provider value={{ user, loading, isAdmin, login, register, logout, updateProfile, changeEmail }}>
             {children}
         </AuthContext.Provider>
     );

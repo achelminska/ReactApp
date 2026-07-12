@@ -12,7 +12,8 @@ public record MovieDto(
     string Tags,
     bool IsCurrentlyShowing,
     bool IsUpcoming,
-    bool IsFamilyFriendly);
+    bool IsFamilyFriendly,
+    bool IsArchived);
 
 public record MovieUpsertRequest(
     [Required] string Title,
@@ -50,7 +51,11 @@ public record MovieShowtimeDto(int ShowtimeId, string Time, string HallName);
 public record ShowtimeDetailsDto(
     int Id,
     DateTime StartsAt,
+    int MovieId,
     string MovieTitle,
+    string PosterUrl,
+    string? Genre,
+    int DurationMinutes,
     string City,
     string HallName,
     object Layout,

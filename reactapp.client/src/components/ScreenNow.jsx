@@ -1,5 +1,7 @@
+import { useTranslation } from 'react-i18next';
 import MovieCarousel from './MovieCarousel';
 
 export default function ScreenNow() {
-    return <MovieCarousel title="NA EKRANIE" category="now" />;
+    const { t } = useTranslation();
+    return <MovieCarousel title={t('home.sectionNow')} category="now" />;
 }

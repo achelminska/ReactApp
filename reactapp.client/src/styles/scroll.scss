@@ -1,29 +1,77 @@
-﻿.scroll-to-top-desktop {
+﻿@import 'variables';
+
+// === Przycisk „wróć na górę" ===
+
+.scroll-to-top-desktop {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #f5821e;
-    color: black;
-    width: 60px;
-    height: 60px;
+    bottom: 28px;
+    right: 28px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     z-index: 999;
-    transition: background-color 0.3s ease;
-    font-size: 1.5rem;
+
+    background: rgba(12, 12, 12, 0.78);
+    backdrop-filter: blur(10px);
+    border: 1px solid $border-subtle;
+    color: #cfcfcf;
+    font-size: 1.15rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+
+    // Płynne pojawianie się i znikanie
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .bi {
+        transition: transform 0.25s ease;
+    }
 
     &:hover {
-        background-color: black;
-        border: 2px solid #f5821e;
-        color: #f5821e;
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        border-color: $primary;
+        color: #000;
+        box-shadow: 0 10px 26px rgba(245, 130, 30, 0.4);
+
+        .bi {
+            transform: translateY(-2px);
+        }
+    }
+
+    &:active {
+        transform: scale(0.94);
     }
 }
 
+// Na mobile pływający przycisk w prawym dolnym rogu — nad pływającym „Kup bilet"
 @media (max-width: 991px) {
     .scroll-to-top-desktop {
-        display: none;
+        bottom: 24px;
+        right: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        background: rgba(14, 14, 14, 0.85);
+        border-color: rgba(245, 130, 30, 0.35);
+        color: $primary;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
     }
 }
