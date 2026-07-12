@@ -13,13 +13,16 @@ function buildDays(t) {
     return Array.from({ length: DAYS_AHEAD }, (_, i) => {
         const date = new Date();
         date.setDate(date.getDate() + i);
+        const weekday = date.toLocaleDateString(dateLocale(), { weekday: 'short' }).replace('.', '');
         return {
             iso: date.toISOString().slice(0, 10),
             label: i === 0
                 ? t('common.today')
                 : i === 1
                     ? t('common.tomorrow')
-                    : date.toLocaleDateString(dateLocale(), { weekday: 'short' }).replace('.', ''),
+                    : weekday,
+            // Na wąskich ekranach "Tomorrow"/"Vandaag" nie mieszczą się w pigułce
+            labelShort: weekday,
             dayNumber: date.toLocaleDateString(dateLocale(), { day: '2-digit', month: '2-digit' }),
         };
     });
@@ -173,7 +176,8 @@ export default function MovieDetailsPage() {
                                     className={selectedDay === d.iso ? 'day-pill selected' : 'day-pill'}
                                     onClick={() => setSelectedDay(d.iso)}
                                 >
-                                    <span className="day-name">{d.label}</span>
+                                    <span className="day-name day-name-full">{d.label}</span>
+                                    <span className="day-name day-name-short">{d.labelShort}</span>
                                     <span className="day-date">{d.dayNumber}</span>
                                 </button>
                             ))}

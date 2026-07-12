@@ -5,6 +5,10 @@ services:
     name: cinemabox
     runtime: docker
     plan: starter
+    # Frankfurt — najbliżej Polski, dużo niższe opóźnienia niż domyślny Oregon.
+    # Uwaga: regionu nie da się zmienić istniejącej usłudze — trzeba ją usunąć
+    # i utworzyć ponownie z tego blueprintu.
+    region: frankfurt
     healthCheckPath: /
     disk:
       name: cinemabox-data

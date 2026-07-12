@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -75,7 +76,23 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseDefaultFiles();
-app.UseStaticFiles();
+
+// Plakaty i bundle frontu zmieniają się tylko przy deployu — tydzień cache'a
+// w przeglądarce, żeby przy kolejnych wizytach grafiki nie szły przez sieć.
+// index.html musi zostać świeży, inaczej po deployu użytkownicy widzieliby
+// starą wersję aplikacji.
+static void CacheStaticAssets(StaticFileResponseContext ctx)
+{
+    var isHtml = ctx.File.Name.EndsWith(".html", StringComparison.OrdinalIgnoreCase);
+    ctx.Context.Response.Headers.CacheControl = isHtml
+        ? "no-cache"
+        : "public,max-age=604800";
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = CacheStaticAssets
+});
 
 // Plakaty wgrywane z panelu admina — katalog musi istnieć i być serwowany
 // jawnie, bo może leżeć poza wwwroot (np. na trwałym dysku Rendera)
@@ -83,7 +100,8 @@ Directory.CreateDirectory(uploadsPath);
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(uploadsPath),
-    RequestPath = "/uploads"
+    RequestPath = "/uploads",
+    OnPrepareResponse = CacheStaticAssets
 });
 
 if (app.Environment.IsDevelopment())

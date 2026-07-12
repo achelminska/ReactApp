@@ -346,6 +346,10 @@
         cursor: pointer;
         transition: all 0.2s ease;
 
+        .pill-top-short {
+            display: none;
+        }
+
         .pill-top {
             font-size: 0.82rem;
             font-weight: 700;
@@ -713,6 +717,16 @@
 
             .pill-top {
                 font-size: 0.74rem;
+            }
+
+            // "Tomorrow"/"Vandaag" nie mieszczą się w wąskiej pigułce —
+            // pokazujemy skrót dnia tygodnia
+            .pill-top-full {
+                display: none;
+            }
+
+            .pill-top-short {
+                display: block;
             }
 
             .pill-bottom {
