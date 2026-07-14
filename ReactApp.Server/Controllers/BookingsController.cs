@@ -38,7 +38,7 @@ public class BookingsController(CinemaDbContext db) : ControllerBase
         try
         {
             var alreadyTaken = await db.BookingSeats
-                .Where(bs => bs.ShowtimeId == request.ShowtimeId
+                .Where(bs => bs.Booking.ShowtimeId == request.ShowtimeId
                              && bs.Booking.Status != BookingStatus.Cancelled)
                 .Select(bs => new { bs.Row, bs.SeatNumber })
                 .ToListAsync();
@@ -70,7 +70,6 @@ public class BookingsController(CinemaDbContext db) : ControllerBase
                 var type = ticketTypes[seat.TicketTypeId];
                 booking.Seats.Add(new BookingSeat
                 {
-                    ShowtimeId = showtime.Id,
                     Row = seat.Row,
                     SeatNumber = seat.SeatNumber,
                     TicketTypeId = type.Id,

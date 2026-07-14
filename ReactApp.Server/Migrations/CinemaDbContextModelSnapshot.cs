@@ -289,9 +289,6 @@ namespace ReactApp.Server.Migrations
                     b.Property<int>("SeatNumber")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ShowtimeId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TicketTypeId")
                         .HasColumnType("INTEGER");
 
@@ -300,9 +297,6 @@ namespace ReactApp.Server.Migrations
                     b.HasIndex("BookingId");
 
                     b.HasIndex("TicketTypeId");
-
-                    b.HasIndex("ShowtimeId", "Row", "SeatNumber")
-                        .IsUnique();
 
                     b.ToTable("BookingSeats");
                 });
