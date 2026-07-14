@@ -371,7 +371,9 @@ FodyWeavers.xsd
 deploy/seed/cinemabox.db
 
 # Frontend build output (budowany w Dockerze przy deployu)
-reactapp.client/dist/
+node_modules/
+dist/
+build/
 
 # Plakaty wgrane lokalnie przez panel admina
 ReactApp.Server/wwwroot/uploads/
