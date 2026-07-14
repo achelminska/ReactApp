@@ -19,6 +19,26 @@ public static class DbSeeder
         await EnsureShowtimesAsync(db);
     }
 
+    /// <summary>
+    /// Tylko katalog (filmy, kina, seanse) — bez kont, rezerwacji i wiadomości.
+    /// Używane przy budowaniu publicznego snapshotu deploy/seed.
+    /// </summary>
+    public static async Task SeedCatalogOnlyAsync(IServiceProvider services)
+    {
+        var db = services.GetRequiredService<CinemaDbContext>();
+        await db.Database.MigrateAsync();
+
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        foreach (var role in new[] { AdminRole, UserRole })
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+                await roleManager.CreateAsync(new IdentityRole(role));
+        }
+
+        await SeedCatalogAsync(db);
+        await EnsureShowtimesAsync(db);
+    }
+
     private static async Task SeedRolesAndAdminAsync(IServiceProvider services)
     {
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();

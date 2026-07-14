@@ -10,9 +10,6 @@ reactapp.client/dist/
 **/*.db-wal
 ReactApp.Server/wwwroot/uploads/
 
-# ...ale snapshot dla deploymentu wchodzi do obrazu
-!deploy/seed/cinemabox.db
-
 # Repozytorium i IDE
 .git/
 .gitignore

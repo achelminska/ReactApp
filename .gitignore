@@ -366,8 +366,9 @@ cinemabox.db-shm
 cinemabox.db-wal
 FodyWeavers.xsd
 
-# ...ale snapshot danych dla deploymentu jest wersjonowany
-!deploy/seed/cinemabox.db
+# Snapshot bazy NIE jest wersjonowany — zawierałby dane devowe.
+# Obraz Docker buduje go sam przy buildzie (patrz Dockerfile).
+deploy/seed/cinemabox.db
 
 # Frontend build output (budowany w Dockerze przy deployu)
 reactapp.client/dist/

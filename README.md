@@ -93,15 +93,18 @@ Baza i wgrane plakaty żyją na trwałym dysku, więc przetrwają kolejne deploy
 
 ### Dane startowe
 
-Obraz zawiera snapshot lokalnej bazy (`deploy/seed/cinemabox.db`) i plakatów (`deploy/seed/uploads/`). Przy pierwszym starcie na pustym dysku entrypoint kopiuje je na `/var/data` — produkcja rusza z dokładnie tymi samymi filmami, opisami i kontami co lokalnie. Kolejne deploye **nie nadpisują** danych produkcyjnych.
+Baza seed **nie jest commitowana do repo** (mogłaby zawierać dane devowe). Obraz Docker buduje ją sam przy `docker build` — tylko katalog filmów, kina i seanse, **bez kont użytkowników, rezerwacji ani wiadomości**. Konto admina tworzy się z env `Seed__AdminEmail` / `Seed__AdminPassword` przy pierwszym starcie.
 
-Aby odświeżyć snapshot przed deployem:
+Lokalnie możesz wygenerować snapshot ręcznie:
 
 ```bash
-rm -f deploy/seed/cinemabox.db
-sqlite3 ReactApp.Server/cinemabox.db "VACUUM INTO 'deploy/seed/cinemabox.db'"
-cp -R ReactApp.Server/wwwroot/uploads/ deploy/seed/uploads/ 2>/dev/null || true
+chmod +x deploy/build-seed.sh
+./deploy/build-seed.sh
 ```
+
+**Nie rób** `VACUUM INTO` z lokalnej `cinemabox.db` do `deploy/seed/` — tam mogą być Twoje konta testowe, rezerwacje i wiadomości z formularza kontaktowego.
+
+Przy pierwszym starcie na Renderze entrypoint kopiuje snapshot z obrazu na `/var/data`. Kolejne deploye **nie nadpisują** danych produkcyjnych.
 
 Test obrazu lokalnie:
 

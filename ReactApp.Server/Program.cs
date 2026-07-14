@@ -68,6 +68,15 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 var app = builder.Build();
 
+// Budowa publicznego snapshotu bez danych osobowych (np. w Dockerze / deploy/build-seed.sh)
+if (args.Contains("--build-seed"))
+{
+    using var seedScope = app.Services.CreateScope();
+    await DbSeeder.SeedCatalogOnlyAsync(seedScope.ServiceProvider);
+    Console.WriteLine("Seed: utworzono bazę katalogową (bez kont użytkowników).");
+    return;
+}
+
 app.UseForwardedHeaders();
 
 using (var scope = app.Services.CreateScope())
