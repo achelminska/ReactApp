@@ -146,8 +146,32 @@
             flex: 1 1 auto;
         }
 
+        // Trzy sekcje w jednym rzędzie na tabletach
         .footer-columns {
-            gap: 2rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .footer-columns {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.75rem 1.25rem;
+        }
+
+        // Trzecia sekcja na pełną szerokość — bez samotnej kolumny po lewej
+        .footer-col:last-child {
+            grid-column: 1 / -1;
+            padding-top: 0.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+            ul {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.55rem 1rem;
+            }
         }
     }
 
@@ -184,11 +208,9 @@
             }
         }
 
-        // Linki w dwóch kolumnach zamiast jednej długiej
+        // Dwie sekcje obok siebie, trzecia pod spodem w dwóch kolumnach
         .footer-columns {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.75rem 1.25rem;
+            gap: 1.5rem 1rem;
         }
 
         .footer-col {
@@ -209,6 +231,12 @@
                 &:hover {
                     transform: none;
                 }
+            }
+        }
+
+        .footer-col:last-child {
+            ul {
+                grid-template-columns: 1fr;
             }
         }
 

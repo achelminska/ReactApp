@@ -77,14 +77,17 @@ public class BookingsController(CinemaDbContext db) : ControllerBase
         return CreatedAtAction(nameof(GetBooking), new { id = booking.Id }, ToDto(booking, showtime));
     }
 
+    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<BookingDto>> GetBooking(int id)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
         var booking = await db.Bookings.AsNoTracking()
             .Include(b => b.Seats).ThenInclude(s => s.TicketType)
             .Include(b => b.Showtime).ThenInclude(s => s.Movie)
             .Include(b => b.Showtime).ThenInclude(s => s.Hall).ThenInclude(h => h.Cinema)
-            .FirstOrDefaultAsync(b => b.Id == id);
+            .FirstOrDefaultAsync(b => b.Id == id && b.UserId == userId);
 
         return booking is null ? NotFound() : Ok(ToDto(booking, booking.Showtime));
     }
