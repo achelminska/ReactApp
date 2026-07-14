@@ -34,5 +34,10 @@ public class CinemaDbContext(DbContextOptions<CinemaDbContext> options)
         builder.Entity<Booking>().Property(b => b.ServiceFee).HasPrecision(10, 2);
         builder.Entity<BookingSeat>().Property(s => s.Price).HasPrecision(10, 2);
         builder.Entity<TicketType>().Property(t => t.Price).HasPrecision(10, 2);
+
+        // Jeden aktywny rekord na (seans, rząd, miejsce) — ostatnia linia obrony przy race condition
+        builder.Entity<BookingSeat>()
+            .HasIndex(s => new { s.ShowtimeId, s.Row, s.SeatNumber })
+            .IsUnique();
     }
 }

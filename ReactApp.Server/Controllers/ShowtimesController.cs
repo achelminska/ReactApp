@@ -52,7 +52,7 @@ public class ShowtimesController(CinemaDbContext db) : ControllerBase
         if (showtime is null) return NotFound();
 
         var occupied = await db.BookingSeats.AsNoTracking()
-            .Where(bs => bs.Booking.ShowtimeId == id
+            .Where(bs => bs.ShowtimeId == id
                          && bs.Booking.Status != Models.BookingStatus.Cancelled)
             .Select(bs => $"R{bs.Row}S{bs.SeatNumber}")
             .ToListAsync();
